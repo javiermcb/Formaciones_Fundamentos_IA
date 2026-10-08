@@ -9,7 +9,7 @@ Suma de la V1 y la V2 para decidir diapositiva a diapositiva. Cada diapositiva l
 
 Después de decidir, la versión final no llevará etiquetas ni duplicados.
 
-## Índice (44 diapositivas)
+## Índice (45 diapositivas)
 
 | # | Etiqueta | Diapositiva |
 |---|---|---|
@@ -33,30 +33,31 @@ Después de decidir, la versión final no llevará etiquetas ni duplicados.
 | 18 | V1 = V2 | Un token no es una palabra |
 | 19 | **Nueva en V3** | **Escribe una frase y mira cómo la trocea (calculadora de tokens)** |
 | 20 | V1 = V2 | Así construye una respuesta |
-| 21 | V1 | Red neuronal |
-| 22 | V2 | Red neuronal (texto corregido) |
-| 23 | V1 | Entrenamiento e inferencia |
-| 24 | V2 | Entrenamiento e inferencia (con búsqueda y memoria) |
-| 25 | V1 = V2 | RAG |
-| 26 | V1 | Alucinación |
-| 27 | V2 | Alucinación (matizada) |
-| 28 | V1 = V2 | Cuatro tareas, no cuatrocientas |
-| 29 | V1 = V2 | No siempre hace falta el modelo caro |
-| 30 | V1 | Lo barato es el modelo (ejemplos fijos, precios antiguos) |
-| 31 | V2 | Lo barato es el modelo (calculadora) |
-| 32 | V1 = V2 | Ella hace el volumen. Tú decides. |
-| 33 | V1 | ¿Esto me va a quitar el trabajo? |
-| 34 | V2 | ¿Esto me va a quitar el trabajo? (con datos reales) |
-| 35 | V1 = V2 | Antes de darle a enviar |
-| 36 | V1 = V2 | No es qué escribes: es dónde lo escribes |
-| 37 | Nueva en V2 | La ley ya está aquí, por fases |
-| 38 | V1 = V2 | La misma petición, mal y bien |
-| 39 | V1 | La misma tarea, dos veces |
-| 40 | V2 | La misma tarea, dos veces (con test) |
-| 41 | V1 | Ninguna tecnología se libra de esta curva |
-| 42 | V2 | Ninguna tecnología se libra de esta curva (posiciones corregidas) |
-| 43 | Nueva en V2 | Tres ideas para el lunes |
-| 44 | Nueva en V2 | Fuentes |
+| 21 | **Nueva en V3** | **¿Por qué escribe «París»? Porque multiplica probabilidades (árbol interactivo)** |
+| 22 | V1 | Red neuronal |
+| 23 | V2 | Red neuronal (texto corregido) |
+| 24 | V1 | Entrenamiento e inferencia |
+| 25 | V2 | Entrenamiento e inferencia (con búsqueda y memoria) |
+| 26 | V1 = V2 | RAG |
+| 27 | V1 | Alucinación |
+| 28 | V2 | Alucinación (matizada) |
+| 29 | V1 = V2 | Cuatro tareas, no cuatrocientas |
+| 30 | V1 = V2 | No siempre hace falta el modelo caro |
+| 31 | V1 | Lo barato es el modelo (ejemplos fijos, precios antiguos) |
+| 32 | V2 | Lo barato es el modelo (calculadora) |
+| 33 | V1 = V2 | Ella hace el volumen. Tú decides. |
+| 34 | V1 | ¿Esto me va a quitar el trabajo? |
+| 35 | V2 | ¿Esto me va a quitar el trabajo? (con datos reales) |
+| 36 | V1 = V2 | Antes de darle a enviar |
+| 37 | V1 = V2 | No es qué escribes: es dónde lo escribes |
+| 38 | Nueva en V2 | La ley ya está aquí, por fases |
+| 39 | V1 = V2 | La misma petición, mal y bien |
+| 40 | V1 | La misma tarea, dos veces |
+| 41 | V2 | La misma tarea, dos veces (con test) |
+| 42 | V1 | Ninguna tecnología se libra de esta curva |
+| 43 | V2 | Ninguna tecnología se libra de esta curva (posiciones corregidas) |
+| 44 | Nueva en V2 | Tres ideas para el lunes |
+| 45 | Nueva en V2 | Fuentes |
 
 ## Calculadora de tokens (diapositiva 19)
 
@@ -64,6 +65,14 @@ Después de decidir, la versión final no llevará etiquetas ni duplicados.
 - Calcula en euros lo que cuesta que un modelo **lea** esa frase, para tres gamas de precio (10 $, 2 $ y 0,25 $ por millón de tokens de entrada), enviada 1 vez, 1.000 veces o 1 millón de veces.
 - **El troceado es real**, no simulado: usa el tokenizador público de OpenAI `o200k_base` (el de GPT‑4o), incluido en el archivo `tokenizer.js`. Claude y Gemini usan tokenizadores propios no públicos, así que su recuento puede variar algo.
 - Tipo de cambio por defecto: 1 $ = 0,87 € (referencia de mediados de septiembre de 2026; no encontré un dato oficial de octubre). Se puede cambiar en la propia diapositiva.
+
+## Árbol de probabilidades «París» (diapositiva 21)
+
+- Contexto: «La capital de Francia es…». En cada paso se ven las letras candidatas con su probabilidad. Se elige con clic, con las teclas 1‑4, con Intro (la más probable) o con «Escribir sola». Retroceso deshace.
+- El árbol se va abriendo: empieza por «p» o por otras letras (u, l, c), sigue por «a» y «r», y en la cuarta letra se separa en «í» (París), «i» (Paris sin tilde) o «e» (pared o parece).
+- A la derecha se multiplica cada paso: París = 91% × 99% × 99,5% × 95% × 99,5% = **84,7%**. pared = 91% × 99% × 99,5% × 2% × 80% = **1,4%**.
+- Mensaje clave: cada paso parece casi seguro, pero la probabilidad de la palabra entera es la multiplicación de todos los pasos, y **siempre baja**. No llega al 100%. En respuestas largas, las pequeñas dudas se acumulan.
+- **Probabilidades de ejemplo, no medidas.** Es una simplificación letra a letra y sin distinguir mayúsculas. El modelo real elige por tokens, y con el troceador real « París», « pared» y « parece» son un único token cada uno. La diapositiva lo indica.
 
 ## Aviso sobre la diapositiva 18 («Un token no es una palabra»)
 

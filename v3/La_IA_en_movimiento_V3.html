@@ -401,6 +401,42 @@
   .tag-ill{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--rust2);border:1px solid var(--rust);border-radius:4px;padding:1px 6px;margin-left:8px;vertical-align:middle}
 
 
+
+  /* ---------- árbol París ---------- */
+  .pt-wrap{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:clamp(14px,2.4vw,32px);width:100%;max-width:1160px;align-items:start;margin-top:4px}
+  .pt-ctx{font-family:var(--serif);font-size:clamp(20px,2.6vw,34px);line-height:1.2;margin-bottom:10px}
+  .pt-q{color:var(--fg2)}
+  .pt-gen{color:var(--pet3);font-weight:600}
+  .pt-cur{display:inline-block;width:2px;height:.9em;background:var(--pet3);vertical-align:-.1em;margin-left:2px;animation:blink 1s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+  .pt-tree-box{overflow-x:auto}
+  .pt-tree-box svg{width:100%;min-width:520px}
+  .pt-h{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg3);margin-bottom:8px}
+  .pt-cands{display:flex;flex-direction:column;gap:6px;min-height:40px}
+  .pt-c{display:grid;grid-template-columns:1.6em 2.4em 1fr 3.8em;gap:8px;align-items:center;background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:6px 10px;cursor:pointer;color:var(--fg2);font:inherit;text-align:left}
+  .pt-c:hover{border-color:var(--pet2)}
+  .pt-c:focus-visible{outline:2px solid var(--pet3);outline-offset:2px}
+  .pt-c .k{font-family:var(--mono);font-size:11px;color:var(--fg3)}
+  .pt-c .l{font-family:var(--serif);font-size:22px;color:var(--fg);font-weight:600}
+  .pt-c .tr{height:10px;background:#22322C;border-radius:99px;overflow:hidden}
+  .pt-c .fl{height:100%;background:var(--pet2);border-radius:99px;transition:width .5s cubic-bezier(.3,.9,.3,1)}
+  .pt-c.top .fl{background:var(--pet3)}
+  .pt-c .pc{font-family:var(--mono);font-size:12.5px;color:var(--fg);text-align:right;font-variant-numeric:tabular-nums}
+  .pt-done{font-size:14px;color:var(--fg2);line-height:1.45;background:var(--soft);border-radius:8px;padding:10px 12px}
+  .pt-done b{color:var(--fg)}
+  .pt-btns{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+  .pt-b{background:#22322C;border:1px solid #33463F;color:var(--fg2);border-radius:99px;padding:5px 12px;font:500 12.5px var(--sans);cursor:pointer}
+  .pt-b:hover{color:var(--fg);border-color:var(--pet2)}
+  .pt-b:focus-visible{outline:2px solid var(--pet3);outline-offset:2px}
+  .pt-chain{display:flex;flex-wrap:wrap;gap:4px 6px;align-items:center;font-family:var(--mono);font-size:clamp(11.5px,1.15vw,14px);color:var(--fg2);min-height:1.6em}
+  .pt-chain .st{background:#1E4A4C;border-radius:5px;padding:2px 6px;color:var(--fg)}
+  .pt-chain .st b{font-family:var(--serif);font-weight:600;margin-right:4px}
+  .pt-chain .x{color:var(--fg3)}
+  .pt-meter{height:14px;background:#22322C;border-radius:99px;overflow:hidden;margin-top:10px}
+  .pt-fill{height:100%;width:100%;background:linear-gradient(90deg,var(--pet),var(--pet3));border-radius:99px;transition:width .6s cubic-bezier(.3,.9,.3,1),background .4s}
+  .pt-fill.low{background:var(--rust)}
+  .pt-total{margin-top:8px;font-size:clamp(13px,1.3vw,16px);color:var(--fg2);line-height:1.45}
+  .pt-total b{font-family:var(--serif);font-size:1.6em;color:var(--fg);font-variant-numeric:tabular-nums;margin-right:6px}
   /* ---------- etiqueta de versión ---------- */
   .vb{position:absolute;top:12px;right:16px;z-index:5;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;padding:3px 10px;border-radius:99px;border:1px solid var(--line2);color:var(--fg2);background:var(--ink2);pointer-events:none;max-width:70%;text-align:right}
   .vb.v1{border-color:var(--rust);color:var(--rust2)}
@@ -445,6 +481,7 @@
     .tl-note{margin-top:40px}
     .tkc-stats{grid-template-columns:repeat(3,minmax(0,1fr))}
     .vb{top:6px;right:10px;font-size:9.5px}
+    .pt-wrap{grid-template-columns:minmax(0,1fr)}
     .tl-track{margin-top:40px}
     .ar{grid-template-columns:6.4em 16px minmax(0,1fr)}
     .cand{grid-template-columns:6.4em 1fr 2.8em}
@@ -911,6 +948,34 @@
     </div>
     <p class="note">Probabilidades de ejemplo<span class="tag-ill">ilustrativo</span>. Lo real es el mecanismo: en ningún momento consulta si la factura 4521 existe — solo <b>encadena la palabra más probable</b>, una y otra vez.</p>
   </section>
+
+  <!-- árbol de probabilidades · París ---------------------------------- -->
+  <section class="slide" data-anim="paris" data-ch="3 · Cómo funciona" data-v="Nueva en V3">
+    <div class="eyebrow">Capítulo 3 · Cómo funciona · el camino más probable</div>
+    <h2>¿Por qué escribe «París»? Porque multiplica probabilidades</h2>
+    <div class="pt-wrap" id="ptw">
+      <div class="pt-left">
+        <div class="pt-ctx"><span class="pt-q">La capital de Francia es</span> <span class="pt-gen" id="ptgen"></span><span class="pt-cur" aria-hidden="true"></span></div>
+        <div class="pt-tree-box"><svg id="ptsvg" viewBox="0 0 820 370" role="img" aria-label="Árbol de letras candidatas con su probabilidad. El camino elegido se resalta."></svg></div>
+      </div>
+      <div class="pt-right">
+        <div class="pt-h">Siguiente letra: elige una</div>
+        <div class="pt-cands" id="ptcands"></div>
+        <div class="pt-btns">
+          <button type="button" class="pt-b" id="ptbest">Elegir la más probable</button>
+          <button type="button" class="pt-b" id="ptplay">Escribir sola</button>
+          <button type="button" class="pt-b" id="ptundo">Deshacer</button>
+          <button type="button" class="pt-b" id="ptreset">Empezar</button>
+        </div>
+        <div class="pt-h" style="margin-top:14px">Probabilidad del camino completo</div>
+        <div class="pt-chain" id="ptchain"></div>
+        <div class="pt-meter"><div class="pt-fill" id="ptfill"></div></div>
+        <div class="pt-total" id="pttotal"></div>
+      </div>
+    </div>
+    <p class="note">Cada paso parece casi seguro, pero la probabilidad de la palabra entera es <b>la multiplicación</b> de todos los pasos, y siempre baja. En una respuesta de cientos de pasos esas pequeñas dudas se acumulan: por eso hay que revisar. <span class="tag-ill" style="margin-left:4px">ilustrativo</span> Probabilidades de ejemplo, letra a letra y sin distinguir mayúsculas. El modelo real elige por tokens: « París» es un único token y lo elige en un solo paso.</p>
+  </section>
+
 
   <!-- 4 ---------------------------------------------------------------- -->
   <section class="slide" data-anim="net" data-ch="3 · Cómo funciona" data-v="V1">
@@ -1449,7 +1514,7 @@
     }
   });
   document.getElementById("stage").addEventListener("click", function(e){
-    if(e.target.closest("a,button,input,label,select,textarea,.calc2,.nf,.chk,.tkc")) return;
+    if(e.target.closest("a,button,input,label,select,textarea,.calc2,.nf,.chk,.tkc,.pt-wrap")) return;
     if(window.getSelection && String(window.getSelection()).length) return;
     var x = e.clientX / window.innerWidth;
     go(cur + (x < 0.33 ? -1 : 1));
@@ -2402,6 +2467,118 @@
     document.body.appendChild(sc);
   })();
   tkRender();
+
+
+  /* ---------- árbol de probabilidades · París ---------- */
+  // Probabilidades de ejemplo: cada nodo da la probabilidad de la letra siguiente, dado lo escrito.
+  var PT={c:{
+    "p":{p:.91,c:{
+      "a":{p:.99,c:{
+        "r":{p:.995,c:{
+          "í":{p:.95,c:{"s":{p:.995,w:"París"}}},
+          "i":{p:.03,c:{"s":{p:.99,w:"Paris (sin tilde)"}}},
+          "e":{p:.02,c:{"d":{p:.80,w:"pared"},"c":{p:.20,c:{"e":{p:.98,w:"parece"}}}}}}},
+        "l":{p:.005,c:{"a":{p:.90,c:{"c":{p:.95,c:{"i":{p:.97,c:{"o":{p:.98,w:"palacio"}}}}}}}}}}},
+      "o":{p:.01,c:{"r":{p:.97,w:"por"}}}}},
+    "u":{p:.04,c:{"n":{p:.98,c:{"a":{p:.97,w:"una"}}}}},
+    "l":{p:.03,c:{"a":{p:.99,w:"la"}}},
+    "c":{p:.02,c:{"o":{p:.92,c:{"n":{p:.90,w:"con"}}}}}
+  }};
+  var ptPath=[], ptShown={}, ptPlayT=null;
+  function ptNode(path){ var n=PT; path.forEach(function(k){ n=n.c[k]; }); return n; }
+  function ptKids(n){ return n.c ? Object.keys(n.c).sort(function(a,b){ return n.c[b].p-n.c[a].p; }) : []; }
+  function pctS(v){ var x=v*100, t=x>=1? x.toFixed(1) : x.toFixed(2); return t.replace(/\.0$/,"").replace(".",",")+"%"; }
+  // layout: leaves in order, parents centred on their children
+  var ptLay={}, ptLeafY=0;
+  (function lay(n,path,d){
+    var ks=ptKids(n), key=path.join("");
+    if(!ks.length){ ptLay[key]={x:30+d*92,y:30+ptLeafY*40}; ptLeafY++; return ptLay[key].y; }
+    var ys=ks.map(function(k){ return lay(n.c[k],path.concat(k),d+1); });
+    ptLay[key]={x:30+d*92,y:(ys[0]+ys[ys.length-1])/2}; return ptLay[key].y;
+  })(PT,[],0);
+  function ptDraw(){
+    var svg=document.getElementById("ptsvg"); svg.innerHTML="";
+    var cur=ptPath.join("");
+    function onPath(key){ return cur.indexOf(key)===0; }
+    function walk(n,path){
+      var key=path.join(""), a=ptLay[key];
+      ptKids(n).forEach(function(k){
+        var ck=key+k; if(!ptShown[ck]) return;
+        var b=ptLay[ck], c=n.c[k], hot=onPath(ck);
+        svg.appendChild(NS("path",{d:"M"+(a.x+12)+","+a.y+" C"+(a.x+60)+","+a.y+" "+(b.x-60)+","+b.y+" "+(b.x-12)+","+b.y,fill:"none",stroke:hot?"#7FC3CB":"#3C5A54","stroke-width":Math.max(1.2,c.p*6),opacity:hot?1:.75}));
+        var lt=NS("text",{x:b.x-17,y:b.y-10,"text-anchor":"end",fill:hot?"#EDF2F0":"#9FB2AC"});
+        lt.setAttribute("class","lbl"); lt.textContent=pctS(c.p); svg.appendChild(lt);
+        walk(c,path.concat(k));
+      });
+      var g=NS("circle",{cx:a.x,cy:a.y,r:key===""?9:13,fill:onPath(key)&&key!==""?"#16403F":"#1C2A25",stroke:onPath(key)&&key!==""?"#7FC3CB":"#3C5A54","stroke-width":1.6});
+      if(key!==""){ g.style.cursor="pointer"; g.addEventListener("click",function(e){ e.stopPropagation(); ptGo(key.split("")); }); }
+      svg.appendChild(g);
+      if(key!==""){
+        var t=NS("text",{x:a.x,y:a.y+6,"text-anchor":"middle",fill:"#EDF2F0"});
+        t.style.fontFamily="Newsreader, Georgia, serif"; t.style.fontSize="17px"; t.style.fontWeight="600"; t.style.pointerEvents="none";
+        t.textContent=key.slice(-1); svg.appendChild(t);
+      }
+      if(n.w && ptShown[key]){
+        var prod=1, m=PT; key.split("").forEach(function(k){ m=m.c[k]; prod*=m.p; });
+        var wt=NS("text",{x:a.x+22,y:a.y+5,fill:onPath(key)?"#EDF2F0":"#9FB2AC"});
+        wt.style.fontFamily="IBM Plex Sans, sans-serif"; wt.style.fontSize="13.5px"; if(onPath(key)) wt.style.fontWeight="600";
+        wt.textContent=n.w.split(" ")[0]+" · "+pctS(prod); svg.appendChild(wt);
+      }
+    }
+    walk(PT,[]);
+  }
+  function ptRender(){
+    var n=ptNode(ptPath), ks=ptKids(n);
+    ks.forEach(function(k){ ptShown[ptPath.join("")+k]=true; });
+    var gtxt=ptPath.join(""); if(ptPath[0]==="p" && (ptPath.length<4 || ptPath[3]==="í" || ptPath[3]==="i") && ptPath[2]!=="l" && ptPath[1]!=="o") gtxt=gtxt.replace(/^p/,"P");
+    document.getElementById("ptgen").textContent=gtxt;
+    var box=document.getElementById("ptcands"); box.innerHTML="";
+    if(!ks.length){
+      var d=document.createElement("div"); d.className="pt-done";
+      d.innerHTML="Palabra terminada: <b></b>. Prueba otro camino tocando una letra del árbol o con <b>Deshacer</b>.";
+      d.querySelector("b").textContent=n.w; box.appendChild(d);
+    }
+    ks.forEach(function(k,i){
+      var b=document.createElement("button"); b.type="button"; b.className="pt-c"+(i===0?" top":"");
+      b.innerHTML='<span class="k">'+(i+1)+'</span><span class="l"></span><span class="tr"><span class="fl" style="display:block;width:0"></span></span><span class="pc"></span>';
+      b.querySelector(".l").textContent=k; b.querySelector(".pc").textContent=pctS(n.c[k].p);
+      b.setAttribute("aria-label","Letra "+k+", "+pctS(n.c[k].p));
+      b.addEventListener("click",function(){ ptStop(); ptGo(ptPath.concat(k)); });
+      box.appendChild(b);
+      requestAnimationFrame(function(){ requestAnimationFrame(function(){ b.querySelector(".fl").style.width=(n.c[k].p*100)+"%"; }); });
+    });
+    var ch=document.getElementById("ptchain"); ch.innerHTML="";
+    var prod=1, m=PT;
+    ptPath.forEach(function(k,i){
+      m=m.c[k]; prod*=m.p;
+      if(i){ var x=document.createElement("span"); x.className="x"; x.textContent="×"; ch.appendChild(x); }
+      var st=document.createElement("span"); st.className="st"; st.innerHTML="<b></b>"; st.querySelector("b").textContent=k; st.appendChild(document.createTextNode(pctS(m.p))); ch.appendChild(st);
+    });
+    if(!ptPath.length){ ch.textContent="Aún no ha elegido ninguna letra."; }
+    var f=document.getElementById("ptfill"); f.style.width=(prod*100)+"%"; f.classList.toggle("low",prod<0.2);
+    var tt=document.getElementById("pttotal");
+    tt.innerHTML = ptPath.length ? "<b>"+pctS(prod)+"</b>"+(n.w? "de probabilidad de escribir «"+n.w.split(" ")[0]+"» entera." : "de probabilidad de haber llegado hasta aquí.") : "<b>100%</b>antes de empezar.";
+    ptDraw();
+  }
+  function ptGo(path){ ptPath=path.slice(); ptRender(); }
+  function ptStop(){ clearTimeout(ptPlayT); ptPlayT=null; }
+  function ptBest(){ var n=ptNode(ptPath), ks=ptKids(n); if(ks.length) ptGo(ptPath.concat(ks[0])); return ks.length>0; }
+  document.getElementById("ptbest").addEventListener("click",function(){ ptStop(); ptBest(); });
+  document.getElementById("ptundo").addEventListener("click",function(){ ptStop(); ptGo(ptPath.slice(0,-1)); });
+  document.getElementById("ptreset").addEventListener("click",function(){ ptStop(); ptShown={}; ptGo([]); });
+  document.getElementById("ptplay").addEventListener("click",function(){
+    ptStop(); ptShown={}; ptGo([]);
+    (function step(){ ptPlayT=setTimeout(function(){ if(ptBest()) step(); }, 1100*SPEEDS[si].k); })();
+  });
+  document.addEventListener("keydown",function(e){
+    if(!slides[cur] || slides[cur].getAttribute("data-anim")!=="paris") return;
+    if(e.target && e.target.closest && e.target.closest("input,textarea,select")) return;
+    var n=ptNode(ptPath), ks=ptKids(n), d=parseInt(e.key,10);
+    if(d>=1 && d<=ks.length){ ptStop(); ptGo(ptPath.concat(ks[d-1])); }
+    else if(e.key==="Backspace"){ e.preventDefault(); ptStop(); ptGo(ptPath.slice(0,-1)); }
+    else if(e.key==="Enter"){ e.preventDefault(); ptStop(); ptBest(); }
+  });
+  anims.paris = function(){ ptStop(); ptShown={}; ptGo([]); };
 
   /* ---------- 10 · copilot bar ---------- */
   anims.copilot = function(el){
