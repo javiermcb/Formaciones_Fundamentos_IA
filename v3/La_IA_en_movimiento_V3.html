@@ -1,4 +1,4 @@
-<title>La IA en movimiento_V2</title>
+<title>La IA en movimiento_V3</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
   /* Diapositivas a pantalla completa, una idea por pantalla; capítulos en la barra inferior. Diseño oscuro deliberado, único tema. */
@@ -400,6 +400,38 @@
 
   .tag-ill{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--rust2);border:1px solid var(--rust);border-radius:4px;padding:1px 6px;margin-left:8px;vertical-align:middle}
 
+
+  /* ---------- etiqueta de versión ---------- */
+  .vb{position:absolute;top:12px;right:16px;z-index:5;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;padding:3px 10px;border-radius:99px;border:1px solid var(--line2);color:var(--fg2);background:var(--ink2);pointer-events:none;max-width:70%;text-align:right}
+  .vb.v1{border-color:var(--rust);color:var(--rust2)}
+  .vb.v2{border-color:var(--pet2);color:var(--pet3)}
+  .vb.n3{border-color:var(--fg);color:var(--fg)}
+
+  /* ---------- calculadora de tokens ---------- */
+  .tkc{display:flex;flex-direction:column;gap:10px;width:100%;max-width:980px}
+  .tkc-l{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg3)}
+  .tkc textarea{width:100%;resize:vertical;background:#121C19;color:var(--fg);border:1px solid var(--line2);border-radius:8px;padding:10px 12px;font:400 clamp(15px,1.6vw,20px)/1.4 var(--serif)}
+  .tkc textarea:focus-visible{outline:2px solid var(--pet3);outline-offset:1px}
+  .tkc-chips{display:flex;flex-wrap:wrap;gap:4px;min-height:38px;max-height:22vh;overflow-y:auto;padding:2px 0}
+  .tkp{font-family:var(--mono);font-size:clamp(12.5px,1.35vw,17px);white-space:pre;border-radius:4px;padding:4px 6px;color:var(--fg);background:#1E4A4C;border:1px solid var(--pet2)}
+  .tkp:nth-child(even){background:#33241A;border-color:var(--rust)}
+  .tkp.sp{color:var(--fg3)}
+  .tkc-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+  .tkc-stats div{background:var(--soft);border-radius:9px;padding:10px 14px}
+  .tkc-stats b{font-family:var(--serif);font-size:clamp(24px,3vw,38px);display:block;font-variant-numeric:tabular-nums;color:var(--fg)}
+  .tkc-stats span{font-size:12.5px;color:var(--fg2)}
+  .tkc-cost{background:#16302F;border-radius:10px;padding:12px 16px}
+  .tkc-ctl{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;font-size:clamp(12px,1.2vw,15px);color:var(--fg2)}
+  .tkc-ctl input{width:5.5em;background:#121C19;color:var(--fg);border:1px solid var(--line2);border-radius:6px;padding:4px 6px;font:500 14px var(--mono)}
+  .seg{display:flex;gap:4px}
+  .seg button{background:#22322C;border:1px solid #33463F;color:var(--fg2);border-radius:99px;padding:4px 11px;font:500 12.5px var(--sans);cursor:pointer}
+  .seg button[aria-pressed="true"]{background:var(--pet);border-color:var(--pet2);color:var(--fg)}
+  .seg button:focus-visible{outline:2px solid var(--pet3);outline-offset:2px}
+  .tkc-rows{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+  .tkr{display:flex;justify-content:space-between;gap:12px;font-size:clamp(12.5px,1.25vw,15.5px);color:var(--fg2);border-top:1px solid #2C4A47;padding-top:6px}
+  .tkr i{font-style:normal;color:var(--fg3);font-size:.85em;margin-left:6px}
+  .tkr b{font-family:var(--mono);color:var(--fg);font-variant-numeric:tabular-nums;text-align:right}
+  .tkc-src{margin:0;font-size:11.5px;color:var(--fg3)}
   @media (max-width:760px){
     .two,.pv,.nest-wrap,.ask,.jobs{grid-template-columns:1fr}
     .agenda{grid-template-columns:1fr 1fr}
@@ -411,6 +443,8 @@
     .prow .mo{grid-column:1/-1}
     .tl-t{display:none}
     .tl-note{margin-top:40px}
+    .tkc-stats{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .vb{top:6px;right:10px;font-size:9.5px}
     .tl-track{margin-top:40px}
     .ar{grid-template-columns:6.4em 16px minmax(0,1fr)}
     .cand{grid-template-columns:6.4em 1fr 2.8em}
@@ -438,7 +472,18 @@
 <div class="stage" id="stage">
 
   <!-- 1 ---------------------------------------------------------------- -->
-  <section class="slide cover" data-anim="cover" data-ch="Portada">
+  <section class="slide cover" data-anim="none" data-ch="Portada" data-v="V1">
+    
+    <div class="inner">
+      <div class="eyebrow">Formación interna · Administración · Finanzas · Contact Center</div>
+      <h1>La IA en movimiento</h1>
+      <p class="lede">Nueve mecanismos que cuesta explicar con palabras y se entienden de un vistazo cuando se ven funcionar.</p>
+      <p class="note" style="margin-top:2rem;padding:0">Avanza con las flechas, la barra espaciadora o haciendo clic. <b class="hl">R</b> repite la animación, <b class="hl">F</b> pantalla completa.</p>
+    </div>
+  </section>
+
+  <!-- 1 ---------------------------------------------------------------- -->
+  <section class="slide cover" data-v="V2" data-anim="cover" data-ch="Portada">
     <canvas id="netcanvas"></canvas>
     <div class="inner">
       <div class="eyebrow">Formación interna · Administración · Finanzas · Contact Center</div>
@@ -450,7 +495,7 @@
 
 
   <!-- agenda ------------------------------------------------------------- -->
-  <section class="slide" data-anim="agenda" data-ch="Agenda">
+  <section class="slide" data-anim="agenda" data-v="Nueva en V2" data-ch="Agenda">
     <div class="eyebrow">El recorrido de hoy</div>
     <h2>Cinco preguntas, en este orden</h2>
     <div class="figure">
@@ -466,7 +511,7 @@
   </section>
 
   <!-- 1 · qué cabe dentro --------------------------------------------- -->
-  <section class="slide" data-anim="nest" data-ch="1 · Qué es" id="ch1">
+  <section class="slide" data-anim="nest" data-v="Nueva en V2" data-ch="1 · Qué es" id="ch1">
     <div class="eyebrow">Capítulo 1 · Qué es</div>
     <h2>«IA» es una caja con otras cajas dentro</h2>
     <div class="figure">
@@ -484,7 +529,7 @@
   </section>
 
   <!-- 1 · predecir vs generar -------------------------------------------- -->
-  <section class="slide" data-anim="predgen" data-ch="1 · Qué es">
+  <section class="slide" data-anim="predgen" data-v="Nueva en V2" data-ch="1 · Qué es">
     <div class="eyebrow">Capítulo 1 · Qué es</div>
     <h2>Dos familias: la que predice y la que redacta</h2>
     <div class="figure">
@@ -509,7 +554,7 @@
   </section>
 
   <!-- 1 · por qué ahora ----------------------------------------------------- -->
-  <section class="slide" data-anim="why" data-ch="1 · Qué es">
+  <section class="slide" data-anim="why" data-v="Nueva en V2" data-ch="1 · Qué es">
     <div class="eyebrow">Capítulo 1 · Qué es</div>
     <h2>¿Por qué ahora, si existe desde 1956?</h2>
     <div class="figure" style="flex-direction:column;justify-content:center">
@@ -527,7 +572,34 @@
   </section>
 
   <!-- qué es ------------------------------------------------------------- -->
-  <section class="slide" data-anim="whatis" data-ch="1 · Qué es">
+  <section class="slide" data-anim="whatis" data-ch="1 · Qué es" data-v="V1">
+    <div class="eyebrow">Empecemos por el principio</div>
+    <h2>Qué es exactamente esto de la IA</h2>
+    <div class="figure" style="flex-direction:column;justify-content:center">
+      <div class="ask">
+        <div class="box">
+          <h4>Cómo le pides algo a Excel</h4>
+          <div class="code">=BUSCARV(A2;Proveedores!A:D;4;FALSO)</div>
+          <p class="sub">Tienes que aprender su idioma. Un punto y coma de más y devuelve error.</p>
+        </div>
+        <div class="box ai">
+          <h4>Cómo le pides algo a una IA</h4>
+          <div class="nat">«¿Qué plazo de pago acordamos con este proveedor?»</div>
+          <p class="sub">Le hablas como a un compañero. Puedes preguntarlo de quince formas distintas y todas funcionan. Eso es <b>lenguaje natural</b>, y a esa instrucción se le llama <b>prompt</b>.</p>
+        </div>
+      </div>
+      <div class="reps">
+        <div class="rh">Y si haces la misma pregunta tres veces</div>
+        <div class="rep"><i>1.ª vez</i><span>«El plazo acordado es de 60 días desde la fecha de factura.»</span></div>
+        <div class="rep"><i>2.ª vez</i><span>«Según el contrato, se acordaron 60 días a contar desde la emisión.»</span></div>
+        <div class="rep"><i>3.ª vez</i><span>«60 días desde factura, según la cláusula 7.2.»</span></div>
+      </div>
+    </div>
+    <p class="note"><b>No es determinista</b>: no responde igual dos veces. Cambia <b>la forma</b>, no debería cambiar <b>el fondo</b> — y cuando cambia el fondo, eso tiene nombre y lo veremos dentro de un rato.</p>
+  </section>
+
+  <!-- qué es ------------------------------------------------------------- -->
+  <section class="slide" data-v="V2" data-anim="whatis" data-ch="1 · Qué es">
     <div class="eyebrow">Capítulo 1 · Qué es · cómo se le habla</div>
     <h2>No hay que aprender su idioma: habla el tuyo</h2>
     <div class="figure" style="flex-direction:column;justify-content:center">
@@ -554,7 +626,25 @@
   </section>
 
   <!-- quién la hace ------------------------------------------------------ -->
-  <section class="slide" data-anim="players" data-ch="1 · Qué es">
+  <section class="slide" data-anim="players" data-ch="1 · Qué es" data-v="V1">
+    <div class="eyebrow">Quién la hace · foto de 2026</div>
+    <h2>Detrás de cada nombre que vais a oír</h2>
+    <div class="figure">
+      <div class="ptable">
+        <div class="prow head"><span>Empresa</span><span>Lo que tú abres</span><span>Por qué te suena</span></div>
+        <div class="prow"><span class="co">OpenAI</span><span class="pr">ChatGPT</span><span class="mo">El que popularizó todo esto. Modelo actual: GPT&#8209;5.6</span></div>
+        <div class="prow"><span class="co">Anthropic</span><span class="pr">Claude</span><span class="mo">Foco declarado en seguridad y control. Modelo: Claude Opus&nbsp;5</span></div>
+        <div class="prow"><span class="co">Google</span><span class="pr">Gemini</span><span class="mo">Dentro de Gmail, Docs y Sheets. Modelo: Gemini&nbsp;3.7</span></div>
+        <div class="prow"><span class="co">Microsoft</span><span class="pr">Copilot</span><span class="mo">Dentro de Office. Por debajo usa modelos de OpenAI</span></div>
+        <div class="prow"><span class="co">Meta</span><span class="pr">Meta AI</span><span class="mo">Modelos de código abierto: una empresa puede alojarlos en sus servidores</span></div>
+        <div class="prow"><span class="co">Mistral</span><span class="pr">Le Chat</span><span class="mo">Francesa. Relevante en Europa por dónde viven los datos</span></div>
+      </div>
+    </div>
+    <p class="note">La <b>empresa</b>, el <b>producto</b> y el <b>modelo</b> suelen llamarse distinto — de ahí buena parte de la confusión. Los números de versión cambian cada pocas semanas; los nombres de la columna del medio, no.</p>
+  </section>
+
+  <!-- quién la hace ------------------------------------------------------ -->
+  <section class="slide" data-v="V2" data-anim="players" data-ch="1 · Qué es">
     <div class="eyebrow">Capítulo 1 · Quién la hace · foto de octubre de 2026</div>
     <h2>Detrás de cada nombre que vais a oír</h2>
     <div class="figure">
@@ -571,7 +661,25 @@
     <p class="note">La <b>empresa</b>, el <b>producto</b> y el <b>modelo</b> suelen llamarse distinto — de ahí buena parte de la confusión. Los números de versión cambian cada pocas semanas; los nombres de la columna del medio, no. Lo que usáis en la empresa depende <b>del contrato que se firmó</b>, no del modelo de moda.</p>
   </section>
   <!-- hype generativa ---------------------------------------------------- -->
-  <section class="slide" data-anim="hypegen" data-ch="2 · Mercado" id="ch2">
+  <section class="slide" data-anim="hypegen" data-ch="2 · Mercado" data-v="V1">
+    <div class="eyebrow">Contexto de mercado · el viaje de la IA generativa</div>
+    <h2>Esto ya ha pasado una vez</h2>
+    <div class="figure">
+      <figure style="margin:0;width:100%;max-width:960px">
+        <svg id="hg_v1" viewBox="0 0 960 330" role="img" aria-label="Recorrido de la IA generativa por el ciclo de expectativas: pico en 2023, descenso en 2024, abismo de desilusión en 2025 y salida hacia usos productivos en 2026"></svg>
+        <div class="tkrule" id="hgmiles_v1">
+          <div><b>2023 ·</b> ChatGPT llega a 100&nbsp;millones de usuarios en dos meses; en marzo, GPT&#8209;4</div>
+          <div><b>2024 ·</b> Gartner (ago.): la IA generativa entra en el abismo y augura un 30% de proyectos abandonados</div>
+          <div><b>2025 ·</b> Informe del MIT: el 95% de los pilotos corporativos no da retorno medible</div>
+          <div><b>2026 ·</b> Solo el 29% de las empresas dice ver un ROI real; entra en vigor el AI Act de la UE</div>
+        </div>
+        <figcaption class="note" style="margin:0;padding-top:10px">Fuentes: <b>Gartner</b>, Hype Cycle for Generative AI (ediciones 2024 y 2025); <b>MIT Media Lab</b>, State of AI in Business (2025); <b>Writer</b>, Enterprise AI Adoption Report (2026). Los años y las cifras están verificados; el resto es lectura de esos informes.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- hype generativa ---------------------------------------------------- -->
+  <section class="slide" data-v="V2" data-anim="hypegen" data-ch="2 · Mercado" id="ch2">
     <div class="eyebrow">Capítulo 2 · Mercado · el viaje de la IA generativa</div>
     <h2>Esto ya ha pasado una vez</h2>
     <div class="figure">
@@ -589,7 +697,27 @@
   </section>
 
   <!-- mapa de la IA ------------------------------------------------------ -->
-  <section class="slide" data-anim="hype" data-ch="2 · Mercado">
+  <section class="slide" data-anim="hype" data-ch="2 · Mercado" data-v="V1">
+    <div class="eyebrow">Contexto de mercado · el mapa de la IA en 2026</div>
+    <h2>Dónde está cada cosa que oís nombrar</h2>
+    <p class="lede" style="margin-bottom:.4rem">Un <b style="color:var(--fg)">agente</b> es una IA que encadena varios pasos sola —consultar, decidir, ejecutar— en vez de responder a una pregunta y pararse.</p>
+    <div class="figure">
+      <figure style="margin:0;width:100%;max-width:1020px">
+        <svg id="hypeai_v1" viewBox="0 0 1020 368" role="img" aria-label="La curva del ciclo de expectativas poblada con tecnologías de inteligencia artificial: la IA general asomando, los agentes de IA en el pico junto a la IA multimodal y la gobernanza, los chatbots sin acceso a datos en el abismo, la IA generativa subiendo por la rampa con RAG y los modelos pequeños, y el filtro de spam, el dictado y las recomendaciones ya en la meseta"></svg>
+        <div class="chips" id="hypechips_v1">
+          <span class="chip"><b>Asomando:</b> computación neuromórfica · IA neurosimbólica</span>
+          <span class="chip"><b>Pico:</b> AI TRiSM · datos listos para IA</span>
+          <span class="chip"><b>Abismo:</b> pilotos sin caso de uso claro</span>
+          <span class="chip"><b>Rampa:</b> ingeniería de prompts · código asistido por IA</span>
+          <span class="chip"><b>Meseta:</b> reconocimiento facial · traducción automática</span>
+        </div>
+        <figcaption class="note" style="margin:0;padding-top:10px">Los <b>agentes de IA</b>, la <b>IA multimodal</b>, la <b>gobernanza de la IA</b> y la posición de la <b>IA generativa</b> proceden de los informes de Gartner de 2025 y 2026. El resto — incluidos los chips de arriba — son ubicaciones orientativas para situar el vocabulario, no posiciones oficiales.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- mapa de la IA ------------------------------------------------------ -->
+  <section class="slide" data-v="V2" data-anim="hype" data-ch="2 · Mercado">
     <div class="eyebrow">Capítulo 2 · Mercado · el mapa de la IA en 2026</div>
     <h2>Dónde está cada cosa que oís nombrar</h2>
     <p class="lede" style="margin-bottom:.4rem">Un <b style="color:var(--fg)">agente</b> es una IA que encadena varios pasos sola —consultar, decidir, ejecutar— en vez de responder a una pregunta y pararse.</p>
@@ -609,7 +737,7 @@
   </section>
 
   <!-- noticias · modelos -------------------------------------------------- -->
-  <section class="slide" data-anim="news" data-ch="2 · Mercado">
+  <section class="slide" data-anim="news" data-v="Nueva en V2" data-ch="2 · Mercado">
     <div class="eyebrow">Capítulo 2 · Noticias de los últimos meses · 1 de 2</div>
     <h2>Modelos y agentes: lo que han lanzado en septiembre</h2>
     <div class="news n2">
@@ -638,7 +766,7 @@
   </section>
 
   <!-- noticias · reglas --------------------------------------------------- -->
-  <section class="slide" data-anim="news" data-ch="2 · Mercado">
+  <section class="slide" data-anim="news" data-v="Nueva en V2" data-ch="2 · Mercado">
     <div class="eyebrow">Capítulo 2 · Noticias de los últimos meses · 2 de 2</div>
     <h2>Mercado, regulación y trabajo</h2>
     <div class="news">
@@ -676,7 +804,7 @@
   </section>
 
   <!-- 2 ---------------------------------------------------------------- -->
-  <section class="slide" data-anim="rule" data-ch="3 · Cómo funciona" id="ch3">
+  <section class="slide" data-anim="rule" data-v="V1 = V2 · la V2 solo añade la etiqueta «ilustrativo»" data-ch="3 · Cómo funciona" id="ch3">
     <div class="eyebrow">Capítulo 3 · Cómo funciona · de la regla al patrón</div>
     <h2>Un camino fijo frente a un abanico de probabilidades</h2>
     <div class="figure">
@@ -718,7 +846,7 @@
 
 
   <!-- token · qué es ------------------------------------------------------ -->
-  <section class="slide" data-anim="tokenwhat" data-ch="3 · Cómo funciona">
+  <section class="slide" data-anim="tokenwhat" data-v="V1 = V2 · la V2 anima el contador" data-ch="3 · Cómo funciona">
     <div class="eyebrow">Capítulo 3 · Cómo funciona · la unidad de medida</div>
     <h2>Un token no es una palabra</h2>
     <div class="figure" style="flex-direction:column;justify-content:center">
@@ -733,8 +861,42 @@
     <p class="note">Troceado aproximado: cada modelo tiene el suyo. La regla que se suele dar —<b>un token ≈ tres cuartos de palabra</b>— está medida en inglés; en español <b>salen más tokens</b> para decir lo mismo, porque estos sistemas se entrenaron sobre todo con textos en inglés.</p>
   </section>
 
+  <!-- calculadora de tokens --------------------------------------------- -->
+  <section class="slide" data-anim="tkcalc" data-ch="3 · Cómo funciona" data-v="Nueva en V3">
+    <div class="eyebrow">Capítulo 3 · Cómo funciona · pruébalo tú</div>
+    <h2>Escribe una frase y mira cómo la trocea</h2>
+    <div class="tkc" id="tkc">
+      <label class="tkc-l" for="tkin">Tu frase</label>
+      <textarea id="tkin" rows="2" spellcheck="false">¿Cuál es el estado de la factura 4521?</textarea>
+      <div class="tkc-chips" id="tkchips" aria-live="polite"></div>
+      <div class="tkc-stats">
+        <div><b id="tkw">0</b><span>palabras</span></div>
+        <div><b id="tkn">0</b><span>tokens</span></div>
+        <div><b id="tkr">0</b><span>tokens por palabra</span></div>
+      </div>
+      <div class="tkc-cost">
+        <div class="tkc-ctl">
+          <span>Si la envías</span>
+          <div class="seg" role="group" aria-label="Número de veces">
+            <button type="button" data-x="1" aria-pressed="true">1 vez</button>
+            <button type="button" data-x="1000" aria-pressed="false">1.000 veces</button>
+            <button type="button" data-x="1000000" aria-pressed="false">1 millón</button>
+          </div>
+          <label for="tkfx">1 $ =</label><input id="tkfx" type="number" step="0.01" min="0.5" max="1.5" value="0.87"><span>€</span>
+        </div>
+        <div class="tkc-rows" id="tkrows">
+          <div class="tkr" data-p="10"><span>Gama alta <i>10 $ / millón</i></span><b>—</b></div>
+          <div class="tkr" data-p="2"><span>Gama media <i>2 $ / millón</i></span><b>—</b></div>
+          <div class="tkr" data-p="0.25"><span>Modelo pequeño <i>0,25 $ / millón</i></span><b>—</b></div>
+        </div>
+      </div>
+      <p class="tkc-src" id="tksrc">Cargando el troceador…</p>
+    </div>
+    <p class="note">Coste de que el modelo <b>lea</b> tu frase (tokens de entrada). Lo que escribe de vuelta cuesta unas cinco veces más por token. Tipo de cambio de referencia de mediados de septiembre de 2026; puedes cambiarlo.</p>
+  </section>
+
   <!-- 3 ---------------------------------------------------------------- -->
-  <section class="slide" data-anim="tokens" data-ch="3 · Cómo funciona">
+  <section class="slide" data-anim="tokens" data-v="V1 = V2 · la V2 solo añade la etiqueta «ilustrativo»" data-ch="3 · Cómo funciona">
     <div class="eyebrow">Capítulo 3 · Cómo funciona · palabra a palabra</div>
     <h2>Así construye una respuesta</h2>
     <div class="figure">
@@ -751,7 +913,19 @@
   </section>
 
   <!-- 4 ---------------------------------------------------------------- -->
-  <section class="slide" data-anim="net" data-ch="3 · Cómo funciona">
+  <section class="slide" data-anim="net" data-ch="3 · Cómo funciona" data-v="V1">
+    <div class="eyebrow">Red neuronal</div>
+    <h2>La señal atraviesa capas, y cada capa extrae un matiz</h2>
+    <div class="figure">
+      <figure style="margin:0;width:100%;max-width:960px">
+        <svg id="netsvg_v1" viewBox="0 0 960 320" role="img" aria-label="Una red neuronal con cuatro capas donde la señal se propaga de las entradas a la salida iluminando los nodos de cada capa sucesivamente"></svg>
+        <figcaption class="note" style="margin:0;padding-top:10px">Nadie decide a mano qué peso tiene cada conexión: <b>se ajustan solos durante el entrenamiento</b>, a base de millones de ejemplos corregidos.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 4 ---------------------------------------------------------------- -->
+  <section class="slide" data-v="V2" data-anim="net" data-ch="3 · Cómo funciona">
     <div class="eyebrow">Capítulo 3 · Cómo funciona · red neuronal</div>
     <h2>La señal atraviesa capas, y cada capa extrae un matiz</h2>
     <div class="figure">
@@ -763,7 +937,19 @@
   </section>
 
   <!-- 5 ---------------------------------------------------------------- -->
-  <section class="slide" data-anim="train" data-ch="3 · Cómo funciona">
+  <section class="slide" data-anim="train" data-ch="3 · Cómo funciona" data-v="V1">
+    <div class="eyebrow">Ciclo de vida</div>
+    <h2>Estudiar la carrera y resolver el caso del día</h2>
+    <div class="figure">
+      <figure style="margin:0;width:100%;max-width:980px">
+        <svg id="trainsvg_v1" viewBox="0 0 980 300" role="img" aria-label="Fase de entrenamiento en la que los pesos se ajustan repetidamente y quedan fijos, seguida de la fase de inferencia en la que el modelo responde sin modificar esos pesos"></svg>
+        <figcaption class="note" style="margin:0;padding-top:10px">Al terminar el entrenamiento <b>los pesos quedan congelados</b>. Por eso el modelo no sabe nada posterior a esa fecha, ni nada de vuestra empresa, salvo que se lo deis vosotros en cada pregunta.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 5 ---------------------------------------------------------------- -->
+  <section class="slide" data-v="V2" data-anim="train" data-ch="3 · Cómo funciona">
     <div class="eyebrow">Capítulo 3 · Cómo funciona · ciclo de vida</div>
     <h2>Estudiar la carrera y resolver el caso del día</h2>
     <div class="figure">
@@ -775,7 +961,7 @@
   </section>
 
   <!-- 6 ---------------------------------------------------------------- -->
-  <section class="slide" data-anim="rag" data-ch="3 · Cómo funciona">
+  <section class="slide" data-anim="rag" data-v="V1 = V2" data-ch="3 · Cómo funciona">
     <div class="eyebrow">Capítulo 3 · Cómo funciona · RAG</div>
     <h2>Cómo se le pasa vuestro contrato</h2>
     <p class="lede" style="margin-bottom:.4rem">A esto se le llama <b style="color:var(--fg)">RAG</b>: conectar la IA a vuestros documentos para que responda con ellos y no con lo que recuerde de internet.</p>
@@ -788,7 +974,19 @@
   </section>
 
   <!-- 7 ---------------------------------------------------------------- -->
-  <section class="slide" data-anim="halluc" data-ch="3 · Cómo funciona">
+  <section class="slide" data-anim="halluc" data-ch="3 · Cómo funciona" data-v="V1">
+    <div class="eyebrow">Alucinación</div>
+    <h2>Dónde está el control de realidad</h2>
+    <div class="figure">
+      <figure style="margin:0;width:100%;max-width:1000px">
+        <svg id="halsvg_v1" viewBox="0 0 1000 260" role="img" aria-label="Los cinco pasos del cálculo de una respuesta, ninguno de los cuales verifica los hechos, seguidos de un sexto paso de revisión humana que es el único punto de verificación"></svg>
+        <figcaption class="note" style="margin:0;padding-top:10px"><b>No hay ningún paso interno</b> que compruebe si lo que ha escrito es cierto. El único que existe está al final, y es <b>una persona</b>.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 7 ---------------------------------------------------------------- -->
+  <section class="slide" data-v="V2" data-anim="halluc" data-ch="3 · Cómo funciona">
     <div class="eyebrow">Capítulo 3 · Cómo funciona · alucinación</div>
     <h2>Dónde está el control de realidad</h2>
     <div class="figure">
@@ -801,7 +999,7 @@
 
 
   <!-- matriz ------------------------------------------------------------ -->
-  <section class="slide" data-anim="matriz" data-ch="4 · Qué hacer" id="ch4">
+  <section class="slide" data-anim="matriz" data-v="V1 = V2 · la V2 añade una frase al pie" data-ch="4 · Qué hacer" id="ch4">
     <div class="eyebrow">Capítulo 4 · Qué hacer con ella · matriz de automatización</div>
     <h2>Cuatro tareas, no cuatrocientas</h2>
     <div class="figure">
@@ -812,7 +1010,7 @@
     </div>
   </section>
   <!-- 8 ---------------------------------------------------------------- -->
-  <section class="slide" data-anim="size" data-ch="4 · Qué hacer">
+  <section class="slide" data-anim="size" data-v="V1 = V2" data-ch="4 · Qué hacer">
     <div class="eyebrow">Capítulo 4 · Qué hacer con ella · modelo grande (LLM) frente a pequeño (SLM)</div>
     <h2>No siempre hace falta el modelo caro</h2>
     <div class="figure">
@@ -825,7 +1023,26 @@
 
 
   <!-- token · coste -------------------------------------------------------- -->
-  <section class="slide" data-anim="tokencost" data-ch="4 · Qué hacer">
+  <section class="slide" data-anim="tokencostv1" data-ch="4 · Qué hacer" data-v="V1">
+    <div class="eyebrow">Cuánto vale · precios verificados a septiembre de 2026</div>
+    <h2>Lo barato es el modelo</h2>
+    <div class="figure" style="flex-direction:column;justify-content:center">
+      <div class="tiles">
+        <div class="tile"><div class="big">10 $</div><div class="cap">por millón de tokens de entrada en un modelo de gama alta</div><div class="sub">GPT&#8209;6 Astra · Claude Fable&nbsp;5.1</div></div>
+        <div class="tile"><div class="big">2 $</div><div class="cap">por millón en un modelo de gama media, que resuelve casi todo</div><div class="sub">Claude Sonnet&nbsp;5 · GPT&#8209;5.6 Terra · Gemini&nbsp;3.1&nbsp;Pro</div></div>
+        <div class="tile"><div class="big r">0,05 $</div><div class="cap">por millón en un modelo pequeño: <b>200 veces más barato</b> que el de arriba</div><div class="sub">GPT&#8209;5 nano</div></div>
+      </div>
+      <div class="calc">
+        <div class="row"><span>Resumir un hilo de 40 correos <i style="color:#67807A">(≈ 12.000 tokens de entrada)</i></span><b>0,024 $</b></div>
+        <div class="row"><span>Los 2.000 correos que entran al mes en el buzón de reclamaciones</span><b>≈ 1,20 $</b></div>
+        <div class="row tot"><span>Lo que cuesta de verdad: la licencia por persona y el tiempo de integrarlo</span><b>ahí sí hay factura</b></div>
+      </div>
+    </div>
+    <p class="note">Los precios por millón están verificados; los recuentos de tokens de los ejemplos son estimaciones. La conclusión no cambia: <b>el consumo del modelo es calderilla</b>, y por eso usar el modelo caro para clasificar tickets es tirar dinero sin ganar nada.</p>
+  </section>
+
+  <!-- token · coste -------------------------------------------------------- -->
+  <section class="slide" data-v="V2" data-anim="tokencost" data-ch="4 · Qué hacer">
     <div class="eyebrow">Capítulo 4 · Cuánto vale · precios públicos a octubre de 2026</div>
     <h2>Lo barato es el modelo</h2>
     <div class="figure" style="flex-direction:column;justify-content:center">
@@ -852,7 +1069,7 @@
   </section>
 
   <!-- 10 --------------------------------------------------------------- -->
-  <section class="slide" data-anim="copilot" data-ch="4 · Qué hacer">
+  <section class="slide" data-anim="copilot" data-v="V1 = V2" data-ch="4 · Qué hacer">
     <div class="eyebrow">Capítulo 4 · Qué hacer con ella · el principio del copiloto</div>
     <h2>Ella hace el volumen. Tú decides.</h2>
     <div class="figure">
@@ -873,7 +1090,37 @@
 
 
   <!-- el puesto ----------------------------------------------------------- -->
-  <section class="slide" data-anim="job" data-ch="4 · Qué hacer">
+  <section class="slide" data-anim="job" data-ch="4 · Qué hacer" data-v="V1">
+    <div class="eyebrow">La pregunta que nadie hace en voz alta</div>
+    <h2>¿Esto me va a quitar el trabajo?</h2>
+    <div class="figure" style="flex-direction:column;justify-content:center">
+      <div class="jobs">
+        <div class="jcol a">
+          <div class="jh">Tu puesto hoy</div>
+          <div class="jstack">
+            <div class="jb mech" data-a="46" data-b="16">Procesar volumen: leer, teclear, clasificar</div>
+            <div class="jb mech" data-a="24" data-b="12">Buscar información</div>
+            <div class="jb crit" data-a="18" data-b="38">Decidir y valorar</div>
+            <div class="jb crit" data-a="12" data-b="34">Responder de ello ante otros</div>
+          </div>
+        </div>
+        <div class="jcol b">
+          <div class="jh">Tu puesto con IA</div>
+          <div class="jstack">
+            <div class="jb mech" data-a="46" data-b="16">Procesar volumen</div>
+            <div class="jb mech" data-a="24" data-b="12">Buscar</div>
+            <div class="jb crit" data-a="18" data-b="38">Decidir y valorar</div>
+            <div class="jb crit" data-a="12" data-b="34">Responder de ello ante otros</div>
+          </div>
+        </div>
+      </div>
+      <p class="jnote">El puesto no se vacía: cambia de forma. Encoge la parte que se puede describir con instrucciones y crece la que no.</p>
+    </div>
+    <p class="note">La respuesta honesta no es «no pasa nada». Es que <b>la parte mecánica</b> de cualquier puesto se va a encoger, y eso deja más sitio para la parte que la máquina no hace: <b>conocer el negocio, decidir con criterio y dar la cara</b>. Quien sepa usarla tendrá ventaja sobre quien no, y esa es la razón real de esta formación.</p>
+  </section>
+
+  <!-- el puesto ----------------------------------------------------------- -->
+  <section class="slide" data-v="V2" data-anim="job" data-ch="4 · Qué hacer">
     <div class="eyebrow">Capítulo 4 · La pregunta que nadie hace en voz alta</div>
     <h2>¿Esto me va a quitar el trabajo?</h2>
     <div class="figure" style="flex-direction:column;justify-content:center">
@@ -908,7 +1155,7 @@
   </section>
 
   <!-- gobernanza 1 ------------------------------------------------------ -->
-  <section class="slide" data-anim="govcheck" data-ch="5 · Reglas" id="ch5">
+  <section class="slide" data-anim="govcheck" data-v="V1 = V2" data-ch="5 · Reglas" id="ch5">
     <div class="eyebrow">Capítulo 5 · Reglas del juego · antes de enviar</div>
     <h2>Antes de darle a enviar</h2>
     <div class="figure">
@@ -920,7 +1167,7 @@
   </section>
 
   <!-- gobernanza 2 ------------------------------------------------------ -->
-  <section class="slide" data-anim="govdata" data-ch="5 · Reglas">
+  <section class="slide" data-anim="govdata" data-v="V1 = V2" data-ch="5 · Reglas">
     <div class="eyebrow">Capítulo 5 · Reglas del juego · confidencialidad</div>
     <h2>No es qué escribes: es dónde lo escribes</h2>
     <div class="figure">
@@ -932,7 +1179,7 @@
   </section>
 
   <!-- AI Act -------------------------------------------------------------- -->
-  <section class="slide" data-anim="aiact" data-ch="5 · Reglas">
+  <section class="slide" data-anim="aiact" data-v="Nueva en V2" data-ch="5 · Reglas">
     <div class="eyebrow">Capítulo 5 · Reglas del juego · el reglamento europeo de IA</div>
     <h2>La ley ya está aquí, por fases</h2>
     <div class="figure" style="flex-direction:column;justify-content:center">
@@ -951,7 +1198,7 @@
   </section>
 
   <!-- cómo pedir bien ----------------------------------------------------- -->
-  <section class="slide" data-anim="promptgood" data-ch="5 · Reglas">
+  <section class="slide" data-anim="promptgood" data-v="V1 = V2" data-ch="5 · Reglas">
     <div class="eyebrow">Capítulo 5 · Lo único que necesitas saber teclear</div>
     <h2>La misma petición, mal y bien</h2>
     <div class="figure">
@@ -975,7 +1222,38 @@
   </section>
 
   <!-- cierre ------------------------------------------------------------ -->
-  <section class="slide" data-anim="end" data-ch="Cierre">
+  <section class="slide" data-anim="end" data-ch="Cierre" data-v="V1">
+    <div class="eyebrow">Tu encargo para esta semana</div>
+    <h2>La misma tarea, dos veces</h2>
+    <div class="figure" style="flex-direction:column;justify-content:center">
+
+      <div class="pick">
+        <h3>Primero: elige una tarea, y que cumpla las tres condiciones</h3>
+        <p>La repites cada semana &middot; te lleva más de quince minutos &middot; si sale mal, no pasa nada grave.</p>
+        <div class="chips">
+          <span class="chip"><b>Administración:</b> clasificar las facturas del buzón</span>
+          <span class="chip"><b>Finanzas:</b> resumir el informe semanal</span>
+          <span class="chip"><b>Contact Center:</b> responder a una reclamación tipo</span>
+        </div>
+      </div>
+
+      <div class="week">
+        <div class="day" data-d="A"><div class="d">LUN</div><div class="t">Hazla como siempre. Cronométrala.</div></div>
+        <div class="day"><div class="d">MAR</div><div class="t"></div></div>
+        <div class="day"><div class="d">MIÉ</div><div class="t"></div></div>
+        <div class="day" data-d="B"><div class="d">JUE</div><div class="t">Hazla con el asistente. Cronométrala.</div></div>
+        <div class="day"><div class="d">VIE</div><div class="t"></div></div>
+      </div>
+
+      <div class="payoff">
+        <p>Y apunta una tercera cosa: <b>qué has tenido que corregirle</b>. El tiempo que ahorras es lo que se ve; lo que has tenido que corregir es lo que de verdad te dice si puedes confiar en ella y para qué.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- cierre ------------------------------------------------------------ -->
+  <section class="slide" data-v="V2" data-anim="end" data-ch="Cierre">
     <div class="eyebrow">Cierre · tu encargo para esta semana</div>
     <h2>La misma tarea, dos veces</h2>
     <div class="figure" style="flex-direction:column;justify-content:center">
@@ -1013,7 +1291,26 @@
 
 
   <!-- panorama ------------------------------------------------------------ -->
-  <section class="slide" data-anim="panorama" data-ch="Cierre">
+  <section class="slide" data-anim="panorama" data-ch="Cierre" data-v="V1">
+    <div class="eyebrow">La foto completa · 2026</div>
+    <h2>Ninguna tecnología se libra de esta curva</h2>
+    <div class="figure">
+      <figure style="margin:0;width:100%;max-width:1020px">
+        <svg id="pan_v1" viewBox="0 0 1020 348" role="img" aria-label="La curva del ciclo de expectativas poblada con tecnologías en cada fase: computación cuántica asomando, agentes de IA en el pico, metaverso y blockchain en el abismo, IA generativa en la rampa, y comercio electrónico, GPS y nube ya en la meseta"></svg>
+        <div class="chips" id="panchips_v1">
+          <span class="chip"><b>Asomando:</b> biotecnología CRISPR · energía de fusión · computación neuromórfica</span>
+          <span class="chip"><b>Pico:</b> vehículos autónomos · gemelos digitales</span>
+          <span class="chip"><b>Abismo:</b> NFTs · Web3 · realidad virtual de consumo</span>
+          <span class="chip"><b>Rampa:</b> robots humanoides de trabajo · impresión 3D industrial</span>
+          <span class="chip"><b>Meseta:</b> redes sociales · streaming · pagos por móvil</span>
+        </div>
+        <figcaption class="note" style="margin:0;padding-top:10px">Las dos posiciones de IA (<b>agentes de IA</b> y <b>IA generativa</b>) proceden de los informes de Gartner de 2026. El resto —incluidos los chips de arriba— son ejemplos ilustrativos del recorrido típico de una tecnología, no posiciones oficiales.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- panorama ------------------------------------------------------------ -->
+  <section class="slide" data-v="V2" data-anim="panorama" data-ch="Cierre">
     <div class="eyebrow">Cierre · la foto completa · 2026</div>
     <h2>Ninguna tecnología se libra de esta curva</h2>
     <div class="figure">
@@ -1032,7 +1329,7 @@
   </section>
 
   <!-- tres ideas ---------------------------------------------------------- -->
-  <section class="slide" data-anim="takeaways" data-ch="Cierre">
+  <section class="slide" data-anim="takeaways" data-v="Nueva en V2" data-ch="Cierre">
     <div class="eyebrow">Cierre · si solo te llevas tres cosas</div>
     <h2>Tres ideas para el lunes</h2>
     <div class="figure">
@@ -1045,7 +1342,7 @@
   </section>
 
   <!-- fuentes ------------------------------------------------------------ -->
-  <section class="slide" data-anim="sources" data-ch="Fuentes">
+  <section class="slide" data-anim="sources" data-v="Nueva en V2" data-ch="Fuentes">
     <div class="eyebrow">Anexo · de dónde sale cada dato</div>
     <h2>Fuentes</h2>
     <div class="srcs">
@@ -1152,7 +1449,7 @@
     }
   });
   document.getElementById("stage").addEventListener("click", function(e){
-    if(e.target.closest("a,button,input,label,select,textarea,.calc2,.nf,.chk")) return;
+    if(e.target.closest("a,button,input,label,select,textarea,.calc2,.nf,.chk,.tkc")) return;
     if(window.getSelection && String(window.getSelection()).length) return;
     var x = e.clientX / window.innerWidth;
     go(cur + (x < 0.33 ? -1 : 1));
@@ -1341,10 +1638,9 @@
   /* ---------- 4 · neural net ---------- */
   var LAYERS = [4,6,6,3];
   var netBuilt = false;
-  function buildNet(){
-    var svg = document.getElementById("netsvg");
-    if(netBuilt) return svg;
-    netBuilt = true;
+  function buildNet(svg){
+    if(svg.__b) return svg;
+    svg.__b = true;
     var X0=150, XS=220, coords=[];
     LAYERS.forEach(function(n,li){
       var arr=[], x=X0+li*XS, gap=250/(n+1);
@@ -1374,8 +1670,8 @@
     sub2.textContent = "la respuesta"; svg.appendChild(sub2);
     return svg;
   }
-  anims.net = function(){
-    var svg = buildNet();
+  anims.net = function(el){
+    var svg = buildNet(el.querySelector('[id^="netsvg"]'));
     svg.querySelectorAll(".node,.edge").forEach(function(n){ n.classList.remove("lit"); });
     LAYERS.forEach(function(_,li){
       after(350+li*620, function(){
@@ -1389,9 +1685,8 @@
 
   /* ---------- 5 · training vs inference ---------- */
   var trainBuilt=false;
-  function buildTrain(){
-    var svg=document.getElementById("trainsvg");
-    if(trainBuilt) return svg; trainBuilt=true;
+  function buildTrain(svg){
+    if(svg.__b) return svg; svg.__b=true;
     svg.appendChild(NS("line",{x1:470,y1:30,x2:470,y2:270,stroke:"#2E413B","stroke-dasharray":"4 6"}));
     var t1=NS("text",{x:30,y:28,class:"lbl",fill:"#9FB2AC"}); t1.textContent="ENTRENAMIENTO · UNA VEZ"; svg.appendChild(t1);
     var t2=NS("text",{x:510,y:28,class:"lbl",fill:"#EDF2F0"}); t2.textContent="INFERENCIA · CADA DÍA"; svg.appendChild(t2);
@@ -1411,8 +1706,8 @@
     var r=NS("text",{x:700,y:214,class:"lbl",fill:"#67807A",opacity:0}); r.setAttribute("class","i-o lbl"); r.textContent="no aprende nada nuevo al responder"; svg.appendChild(r);
     return svg;
   }
-  anims.train = function(){
-    var svg = buildTrain();
+  anims.train = function(el){
+    var svg = buildTrain(el.querySelector('[id^="trainsvg"]'));
     var w = svg.querySelectorAll(".wgt"), io = svg.querySelectorAll(".i-o");
     io.forEach(function(n){ n.style.opacity=0; });
     w.forEach(function(n){ n.setAttribute("fill","#22322C"); });
@@ -1484,9 +1779,8 @@
 
   /* ---------- 7 · hallucination chain ---------- */
   var halBuilt=false;
-  function buildHal(){
-    var svg=document.getElementById("halsvg");
-    if(halBuilt) return svg; halBuilt=true;
+  function buildHal(svg){
+    if(svg.__b) return svg; svg.__b=true;
     var names=["Trocea","Traduce","Cruza","Calcula","Elige"];
     names.forEach(function(n,i){
       var x=20+i*160;
@@ -1502,8 +1796,8 @@
     var p3=NS("text",{x:918,y:166,class:"lbl","text-anchor":"middle",fill:"#E39A63",opacity:0}); p3.setAttribute("class","lbl h-p"); p3.textContent="único control"; svg.appendChild(p3);
     return svg;
   }
-  anims.halluc = function(){
-    var svg=buildHal();
+  anims.halluc = function(el){
+    var svg=buildHal(el.querySelector('[id^="halsvg"]'));
     svg.querySelectorAll(".h-b,.h-p").forEach(function(n){ n.style.opacity=0; });
     svg.querySelectorAll(".h-b").forEach(function(n,i){
       after(250+i*130, function(){ n.style.transition="opacity .4s"; n.style.opacity=1; });
@@ -1680,9 +1974,8 @@
     for(var i=0;i<24;i++){ var m=(lo+hi)/2; p=path.getPointAtLength(m); if(p.x<tx) lo=m; else hi=m; }
     return path.getPointAtLength((lo+hi)/2);
   }
-  function buildHG(){
-    var svg=document.getElementById("hg");
-    if(hgBuilt) return svg; hgBuilt=true;
+  function buildHG(svg){
+    if(svg.__b) return svg; svg.__b=true;
     var d="M40,250 C120,250 150,70 220,62 C280,56 300,220 380,236 C470,254 560,170 700,140 C800,120 880,112 930,108";
     hgPath=NS("path",{d:d,fill:"none",stroke:"#3C5A54","stroke-width":2.5,class:"draw hg-p"});
     svg.appendChild(hgPath);
@@ -1707,12 +2000,13 @@
     var cap=NS("text",{x:480,y:24,"text-anchor":"middle",fill:"#EDF2F0",class:"hg-cap",opacity:0});
     cap.style.fontFamily="IBM Plex Sans, sans-serif"; cap.style.fontSize="15px";
     cap.textContent="La IA generativa ya ha recorrido esta curva entera"; svg.appendChild(cap);
+    svg.__p=hgPath;
     return svg;
   }
   anims.hypegen = function(el){
-    var svg=buildHG();
+    var svg=buildHG(el.querySelector('[id^="hg"]')), hgPath=svg.__p;
     var g=svg.querySelector(".hg-mark");
-    var miles=el.querySelectorAll("#hgmiles div");
+    var miles=el.querySelectorAll('[id^="hgmiles"] div');
     svg.querySelectorAll(".draw").forEach(function(n){ n.classList.remove("go"); });
     svg.querySelectorAll(".hg-s,.hg-cap").forEach(function(n){ n.style.opacity=0; });
     miles.forEach(function(n){ n.classList.remove("go"); });
@@ -1761,9 +2055,8 @@
       t.textContent=txt; svg.appendChild(t);
     });
   }
-  function buildAI(){
-    var svg=document.getElementById("hypeai");
-    if(aiBuilt) return svg; aiBuilt=true;
+  function buildAI(svg){
+    if(svg.__b) return svg; svg.__b=true;
     var d="M40,226 C126,226 160,64 236,58 C300,53 322,198 404,214 C500,232 596,152 744,124 C850,104 936,96 990,92";
     aiPath=NS("path",{d:d,fill:"none",stroke:"#3C5A54","stroke-width":2.5,class:"draw ai-p"});
     svg.appendChild(aiPath);
@@ -1791,11 +2084,12 @@
     cap.style.fontFamily="IBM Plex Sans, sans-serif"; cap.style.fontSize="15px";
     cap.textContent="Los agentes están hoy donde estaba la IA generativa en 2023.";
     svg.appendChild(cap);
+    svg.__p=aiPath;
     return svg;
   }
   anims.hype = function(el){
-    var svg=buildAI();
-    var chips=el.querySelectorAll("#hypechips .chip");
+    var svg=buildAI(el.querySelector('[id^="hypeai"]'));
+    var chips=el.querySelectorAll('[id^="hypechips"] .chip');
     svg.querySelectorAll(".draw").forEach(function(n){ n.classList.remove("go"); });
     svg.querySelectorAll(".ai,.ai-pred,.ai-cap").forEach(function(n){ n.style.opacity=0; });
     chips.forEach(function(n){ n.classList.remove("go"); });
@@ -1828,9 +2122,8 @@
     [650,"IA generativa","saliendo hacia usos reales",1,"#7FC3CB"],
     [930,"Nube · GPS · e-commerce","nadie las discute ya",0,"#8A9A95"]
   ];
-  function buildPan(){
-    var svg=document.getElementById("pan");
-    if(panBuilt) return svg; panBuilt=true;
+  function buildPan(svg){
+    if(svg.__b) return svg; svg.__b=true;
     var d="M40,226 C126,226 160,64 236,58 C300,53 322,198 404,214 C500,232 596,152 744,124 C850,104 936,96 990,92";
     panPath=NS("path",{d:d,fill:"none",stroke:"#3C5A54","stroke-width":2.5,class:"draw pan-p"});
     svg.appendChild(panPath);
@@ -1861,11 +2154,12 @@
     ar.style.fontFamily="IBM Plex Sans, sans-serif"; ar.style.fontSize="15px";
     ar.textContent="Todas recorren el mismo camino. Solo cambia por dónde van hoy.";
     svg.appendChild(ar);
+    svg.__p=panPath;
     return svg;
   }
   anims.panorama = function(el){
-    var svg=buildPan();
-    var chips=el.querySelectorAll("#panchips .chip");
+    var svg=buildPan(el.querySelector('[id^="pan"]'));
+    var chips=el.querySelectorAll('[id^="panchips"] .chip');
     svg.querySelectorAll(".draw").forEach(function(n){ n.classList.remove("go"); });
     svg.querySelectorAll(".pn,.pn-cap").forEach(function(n){ n.style.opacity=0; });
     chips.forEach(function(n){ n.classList.remove("go"); });
@@ -2037,6 +2331,77 @@
       : "Le faltan " + (3-c) + " condición" + (3-c>1?"es":"") + ". Mejor busca otra tarea para empezar.";
   }
   document.querySelectorAll("#chk input").forEach(function(i){ i.addEventListener("change", verdict); });
+
+  /* ---------- coste · versión V1 ---------- */
+  anims.tokencostv1 = function(el){
+    var tiles=el.querySelectorAll(".tile"), calc=el.querySelector(".calc");
+    tiles.forEach(function(t){ t.classList.remove("go"); });
+    calc.classList.remove("go");
+    tiles.forEach(function(t,i){ after(300+i*650, function(){ t.classList.add("go"); }); });
+    after(2400, function(){ calc.classList.add("go"); });
+  };
+
+
+  /* ---------- etiquetas de versión ---------- */
+  slides.forEach(function(sl){
+    var v=sl.getAttribute("data-v"); if(!v) return;
+    var b=document.createElement("div");
+    b.className="vb "+(v==="V1"?"v1":v==="V2"?"v2":v.indexOf("V3")>-1?"n3":"");
+    b.textContent=v; sl.appendChild(b);
+  });
+
+  /* ---------- calculadora de tokens ---------- */
+  var tkin=document.getElementById("tkin"), tkX=1, tkTimer=null;
+  function approxPieces(t){
+    var re=/\s?[A-Za-zÀ-ÿ]+|\s?\d{1,3}|\s?[^\sA-Za-zÀ-ÿ\d]+|\s+/g, out=[], m;
+    while((m=re.exec(t))){
+      var w=m[0];
+      if(w.trim().length>7){ for(var i=0;i<w.length;i+=5) out.push({t:w.slice(i,i+5)}); }
+      else out.push({t:w});
+    }
+    return {count:out.length, pieces:out};
+  }
+  function fmtEUR(v){
+    if(v===0) return "0 €";
+    if(v>=1) return v.toLocaleString("es-ES",{minimumFractionDigits:2,maximumFractionDigits:2})+" €";
+    return v.toLocaleString("es-ES",{maximumSignificantDigits:2,maximumFractionDigits:20})+" €";
+  }
+  function tkRender(){
+    var t=tkin.value, real=!!window.TOKENIZER;
+    var r=real?window.TOKENIZER.pieces(t):approxPieces(t);
+    var box=document.getElementById("tkchips"); box.innerHTML="";
+    r.pieces.forEach(function(p){
+      var c=document.createElement("span"); c.className="tkp"+(p.t.trim()===""?" sp":"");
+      c.textContent=p.t.replace(/\n/g,"↵"); box.appendChild(c);
+    });
+    var words=(t.match(/[A-Za-zÀ-ÿ0-9]+/g)||[]).length;
+    document.getElementById("tkw").textContent=words.toLocaleString("es-ES");
+    document.getElementById("tkn").textContent=r.count.toLocaleString("es-ES");
+    document.getElementById("tkr").textContent=words?(r.count/words).toLocaleString("es-ES",{maximumFractionDigits:1}):"0";
+    var fx=parseFloat(document.getElementById("tkfx").value)||0.87;
+    document.querySelectorAll("#tkrows .tkr").forEach(function(row){
+      row.querySelector("b").textContent=fmtEUR(r.count*tkX*parseFloat(row.dataset.p)/1e6*fx);
+    });
+    document.getElementById("tksrc").textContent = real
+      ? "Troceado real con el tokenizador público de OpenAI (o200k_base, el de GPT‑4o). Claude y Gemini usan el suyo propio: el recuento puede variar algo entre modelos."
+      : "Estimación aproximada (el troceador real no ha cargado). Los cortes y el recuento son orientativos.";
+  }
+  tkin.addEventListener("input", function(){ clearTimeout(tkTimer); tkTimer=setTimeout(tkRender,120); });
+  document.getElementById("tkfx").addEventListener("input", tkRender);
+  document.querySelectorAll(".seg button").forEach(function(b){
+    b.addEventListener("click", function(){
+      tkX=parseInt(b.dataset.x,10);
+      document.querySelectorAll(".seg button").forEach(function(x){ x.setAttribute("aria-pressed", String(x===b)); });
+      tkRender();
+    });
+  });
+  anims.tkcalc = function(){ tkRender(); };
+  (function loadTok(){
+    var sc=document.createElement("script"); sc.src="tokenizer.js"; sc.async=true;
+    sc.onload=tkRender; sc.onerror=tkRender;
+    document.body.appendChild(sc);
+  })();
+  tkRender();
 
   /* ---------- 10 · copilot bar ---------- */
   anims.copilot = function(el){
