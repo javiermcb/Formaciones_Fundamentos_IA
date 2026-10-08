@@ -1,4 +1,5 @@
 <title>La IA en movimiento_V3</title>
+<!-- © 2026 Javier Martín-Consuegra. Todos los derechos reservados. Prohibida su reproducción o difusión sin autorización escrita del titular. -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
   /* Diapositivas a pantalla completa, una idea por pantalla; capítulos en la barra inferior. Diseño oscuro deliberado, único tema. */
@@ -437,6 +438,16 @@
   .pt-fill.low{background:var(--rust)}
   .pt-total{margin-top:8px;font-size:clamp(13px,1.3vw,16px);color:var(--fg2);line-height:1.45}
   .pt-total b{font-family:var(--serif);font-size:1.6em;color:var(--fg);font-variant-numeric:tabular-nums;margin-right:6px}
+
+  /* ---------- propiedad ---------- */
+  .own{position:fixed;left:0;right:0;bottom:calc(2px + env(safe-area-inset-bottom,0px));text-align:center;font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;color:var(--fg3);z-index:39;pointer-events:none}
+  .hud{bottom:18px}
+  .own-cover{margin:1.2rem 0 0;font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--fg2)}
+  .legal{max-width:760px;background:var(--soft);border-radius:12px;padding:clamp(18px,2.4vw,32px);border-top:3px solid var(--rust)}
+  .legal p{margin:0 0 .9rem;font-size:clamp(13px,1.3vw,16.5px);color:var(--fg2);line-height:1.6}
+  .legal p:last-child{margin-bottom:0}
+  .legal b{color:var(--fg)}
+  .legal .sig{font-family:var(--serif);font-size:clamp(18px,1.9vw,24px);color:var(--fg);font-weight:600;margin-top:1.2rem}
   /* ---------- etiqueta de versión ---------- */
   .vb{position:absolute;top:12px;right:16px;z-index:5;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;padding:3px 10px;border-radius:99px;border:1px solid var(--line2);color:var(--fg2);background:var(--ink2);pointer-events:none;max-width:70%;text-align:right}
   .vb.v1{border-color:var(--rust);color:var(--rust2)}
@@ -482,10 +493,12 @@
     .tkc-stats{grid-template-columns:repeat(3,minmax(0,1fr))}
     .vb{top:6px;right:10px;font-size:9.5px}
     .pt-wrap{grid-template-columns:minmax(0,1fr)}
+    .own-x{display:none}
+    .own{white-space:nowrap}
     .tl-track{margin-top:40px}
     .ar{grid-template-columns:6.4em 16px minmax(0,1fr)}
     .cand{grid-template-columns:6.4em 1fr 2.8em}
-    .hud{bottom:10px}
+    .hud{bottom:18px}
   }
   @media (prefers-reduced-motion:reduce){
     *{transition-duration:.01ms !important;animation-duration:.01ms !important}
@@ -516,6 +529,7 @@
       <h1>La IA en movimiento</h1>
       <p class="lede">Nueve mecanismos que cuesta explicar con palabras y se entienden de un vistazo cuando se ven funcionar.</p>
       <p class="note" style="margin-top:2rem;padding:0">Avanza con las flechas, la barra espaciadora o haciendo clic. <b class="hl">R</b> repite la animación, <b class="hl">F</b> pantalla completa.</p>
+      <p class="own-cover">© 2026 Javier Martín-Consuegra. Todos los derechos reservados.</p>
     </div>
   </section>
 
@@ -527,6 +541,7 @@
       <h1>La IA en movimiento</h1>
       <p class="lede">Qué es, por qué ha llegado ahora, cómo funciona por dentro y qué hacer con ella el lunes. Sin tecnicismos: cada mecanismo se entiende de un vistazo cuando se ve funcionar.</p>
       <p class="note" style="margin-top:2rem;padding:0">Foto a octubre de 2026. Avanza con las flechas, la barra espaciadora o haciendo clic. <b class="hl">R</b> repite la animación, <b class="hl">F</b> pantalla completa.</p>
+      <p class="own-cover">© 2026 Javier Martín-Consuegra. Todos los derechos reservados.</p>
     </div>
   </section>
 
@@ -1445,8 +1460,24 @@
     <p class="note">Consultadas el 8 de octubre de 2026. Los precios y las versiones de modelos cambian cada pocas semanas: revisadlos antes de cada sesión.</p>
   </section>
 
+  <!-- propiedad ----------------------------------------------------------- -->
+  <section class="slide" data-anim="none" data-ch="Propiedad" data-v="Nueva en V3">
+    <div class="eyebrow">Aviso legal</div>
+    <h2>Propiedad y uso</h2>
+    <div class="figure">
+      <div class="legal">
+        <p>Esta presentación, su estructura, textos, gráficos, animaciones y herramientas interactivas son <b>propiedad exclusiva de Javier Martín-Consuegra</b>.</p>
+        <p>Queda <b>prohibida su reproducción, distribución, comunicación pública o transformación</b>, total o parcial, por cualquier medio, sin autorización previa y por escrito del titular.</p>
+        <p>Uso restringido a las sesiones de formación autorizadas por el titular.</p>
+        <p>Las noticias, cifras y estudios citados pertenecen a sus respectivas fuentes, indicadas en la diapositiva «Fuentes».</p>
+        <p class="sig">© 2026 Javier Martín-Consuegra. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </section>
+
 </div>
 
+<div class="own" aria-hidden="true">© 2026 Javier Martín-Consuegra<span class="own-x"> · Uso restringido · Prohibida su difusión</span></div>
 <div class="hud">
   <button class="navbtn" id="prev" aria-label="Diapositiva anterior">&#8592;</button>
   <span class="chap" id="chap"></span>

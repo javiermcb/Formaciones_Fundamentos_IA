@@ -1,5 +1,7 @@
 # La IA en movimiento_V3 (versión de trabajo)
 
+© 2026 Javier Martín-Consuegra. Todos los derechos reservados. Prohibida su reproducción o difusión, total o parcial, sin autorización previa y por escrito del titular.
+
 Suma de la V1 y la V2 para decidir diapositiva a diapositiva. Cada diapositiva lleva una etiqueta arriba a la derecha:
 
 - **V1**: versión original. Va justo antes de su equivalente en la V2.
@@ -9,7 +11,7 @@ Suma de la V1 y la V2 para decidir diapositiva a diapositiva. Cada diapositiva l
 
 Después de decidir, la versión final no llevará etiquetas ni duplicados.
 
-## Índice (45 diapositivas)
+## Índice (46 diapositivas)
 
 | # | Etiqueta | Diapositiva |
 |---|---|---|
@@ -58,6 +60,7 @@ Después de decidir, la versión final no llevará etiquetas ni duplicados.
 | 43 | V2 | Ninguna tecnología se libra de esta curva (posiciones corregidas) |
 | 44 | Nueva en V2 | Tres ideas para el lunes |
 | 45 | Nueva en V2 | Fuentes |
+| 46 | Nueva en V3 | Propiedad y uso (aviso legal) |
 
 ## Calculadora de tokens (diapositiva 19)
 
@@ -77,3 +80,10 @@ Después de decidir, la versión final no llevará etiquetas ni duplicados.
 ## Aviso sobre la diapositiva 18 («Un token no es una palabra»)
 
 El troceado que muestra es inventado («fact / ura», «45 / 21»). El troceador real corta la misma frase así: `¿Cu · ál · es · el · estado · de · la · factura · (espacio) · 452 · 1 · ?`. Da también 12 tokens, pero «factura» no se parte. Conviene corregirla con el troceado real.
+
+## Propiedad
+
+- Portada (V1 y V2): «© 2026 Javier Martín-Consuegra. Todos los derechos reservados».
+- Todas las diapositivas: pie fijo «© 2026 Javier Martín-Consuegra · Uso restringido · Prohibida su difusión» (en móvil, solo el nombre).
+- Diapositiva final «Propiedad y uso» con el aviso completo.
+- El aviso no impide técnicamente copiar la presentación; el acceso lo controla el menú «Compartir» del enlace. No es asesoramiento jurídico.
