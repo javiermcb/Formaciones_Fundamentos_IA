@@ -4,6 +4,10 @@
 
 La V5 con un gancho de inicio y su cierre: la clase dice qué palabras asocia a la IA al empezar y al terminar, y una diapositiva compara las dos. 37 diapositivas. La V5 se conserva intacta.
 
+## Cambio en la diapositiva 6
+
+«Tres máquinas, la misma consulta» (antes «No hay que aprender su idioma»): entre Excel y la IA generativa se añade la IA predictiva (Machine Learning). Recibe los datos de un cliente y devuelve «riesgo de pago tardío: 72%» las tres veces. El 72% está marcado como ilustrativo.
+
 ## Diapositivas nuevas
 
 - **2 · ¿Qué palabra os viene a la cabeza cuando oís «inteligencia artificial»?** El profesor escribe las palabras que dice la clase (Intro para añadir, varias separadas por comas). Aparecen como una nube; las repetidas salen más grandes con su número de veces. Tocar una palabra la quita.
@@ -30,7 +34,7 @@ La V5 con un gancho de inicio y su cierre: la clase dice qué palabras asocia a 
 | 3 | Apertura | Cinco preguntas, en este orden | 2 |
 | 4 | 1 · Qué es | «IA» es una caja con otras cajas dentro | 3 |
 | 5 | 1 · Qué es | Dos familias: la IA que predice y la que redacta | 4 |
-| 6 | 1 · Qué es | No hay que aprender su idioma: habla el tuyo (Excel frente a IA) | 5 |
+| 6 | 1 · Qué es | Tres máquinas, la misma consulta (Excel, IA predictiva e IA generativa) | 5 |
 | 7 | 1 · Qué es | Detrás de cada nombre que vais a oír | 6 |
 | 8 | 1 · Qué es | ¿Por qué ahora, si existe desde 1956? | 7 |
 | 9 | 2 · Cómo funciona | Un camino fijo frente a un abanico de probabilidades | 8 |

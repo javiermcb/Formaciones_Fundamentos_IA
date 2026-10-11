@@ -181,6 +181,17 @@
   .verdict2.go{opacity:1}
   .verdict2 b{color:var(--fg)}
   .same.ai .verdict2 b{color:var(--pet3)}
+  .ask2.three{grid-template-columns:repeat(3,minmax(0,1fr));max-width:1180px}
+  .ask2 .box.pred{background:#1B2B30}
+  .ask2 .pred h4{color:var(--fg2)}
+  .ask2 .pred .sub{color:var(--fg2)}
+  .same.pred{border:1px solid #3C5A54;border-style:solid}
+  .same.pred .rh{color:var(--fg2)}
+  .same .rep.p span{color:var(--fg)}
+  .same.pred mark{background:rgba(237,242,240,.12);color:var(--fg)}
+  .ask2.three .code{font-size:clamp(11px,1.05vw,13.5px)}
+  .ask2 .pred .code{word-break:normal;overflow-wrap:anywhere}
+  .ask2.three .same .rep{font-size:clamp(12px,1.18vw,15px)}
   .reps{width:100%;max-width:980px;margin-top:clamp(12px,2.2vh,24px)}
   .reps .rh{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg3);margin-bottom:9px}
   .rep{display:flex;gap:10px;align-items:baseline;font-size:clamp(12px,1.25vw,15.5px);color:var(--fg2);padding:5px 0;opacity:0;transform:translateX(-8px);transition:opacity .5s,transform .5s}
@@ -671,6 +682,12 @@
     .srcs{font-size:clamp(10.5px,.95vw,12.5px)}
     .legal p{margin-bottom:.6rem}
   }
+  @media (max-height:760px) and (min-width:761px){
+    .ask2.three .box{padding:10px 14px}
+    .ask2.three .same{padding:8px 12px;gap:3px}
+    .ask2.three .nat{font-size:clamp(14px,1.5vw,18px)}
+    .ask2.three .sub{margin-top:.4rem;font-size:12px}
+  }
   @media (max-height:700px) and (min-width:761px){
     .lede{font-size:clamp(13px,1.25vw,16px)}
     .tl-track{margin-top:84px}
@@ -799,12 +816,12 @@
   <!-- qué es ------------------------------------------------------------- -->
   <section class="slide" data-anim="whatis" data-ch="1 · Qué es">
     <div class="eyebrow">Capítulo 1 · Qué es · un ejemplo para compararlas</div>
-    <h2>No hay que aprender su idioma: habla el tuyo</h2>
+    <h2>Tres máquinas, la misma consulta</h2>
     <div class="figure" style="flex-direction:column;justify-content:center">
-      <div class="ask2">
+      <div class="ask2 three">
         <div class="col">
           <div class="box">
-            <h4>Cómo le pides algo a Excel</h4>
+            <h4>Excel · sigue reglas</h4>
             <div class="code">=BUSCARV(A2;Proveedores!A:D;4;FALSO)</div>
             <p class="sub">Tienes que aprender su idioma. Un punto y coma de más y devuelve error.</p>
           </div>
@@ -817,10 +834,24 @@
           </div>
         </div>
         <div class="col">
+          <div class="box pred">
+            <h4>IA que predice · Machine Learning</h4>
+            <div class="code">Cliente 1043 · 12 facturas · retraso medio 9 días · 18.400 €</div>
+            <p class="sub">No le escribes una pregunta: le das los datos del cliente y devuelve un número. Aprendió el patrón de miles de clientes anteriores.</p>
+          </div>
+          <div class="same pred">
+            <div class="rh">Los mismos datos, tres veces</div>
+            <div class="rep p"><i>1.ª</i><span>Riesgo de pago tardío: <mark>72%</mark></span></div>
+            <div class="rep p"><i>2.ª</i><span>Riesgo de pago tardío: <mark>72%</mark></span></div>
+            <div class="rep p"><i>3.ª</i><span>Riesgo de pago tardío: <mark>72%</mark></span></div>
+            <div class="verdict2">Mismo número, pero es <b>una estimación que puede fallar</b></div>
+          </div>
+        </div>
+        <div class="col">
           <div class="box ai">
-            <h4>Cómo le pides algo a una IA</h4>
+            <h4>IA que redacta · IA generativa</h4>
             <div class="nat">«¿Qué plazo de pago acordamos con este proveedor?»</div>
-            <p class="sub">Le hablas como a un compañero. Puedes preguntarlo de quince formas distintas y todas funcionan. Eso es <b>lenguaje natural</b>, y a esa instrucción se le llama <b>prompt</b>.</p>
+            <p class="sub">Le hablas como a un compañero, en <b>lenguaje natural</b>. A esa instrucción se le llama <b>prompt</b>.</p>
           </div>
           <div class="same ai">
             <div class="rh">La misma pregunta, tres veces</div>
@@ -832,7 +863,7 @@
         </div>
       </div>
     </div>
-    <p class="note">Excel no es IA predictiva: es software de reglas. Pero sirve para ver la diferencia entre algo que siempre responde igual y una IA que redacta. <b>No es determinista</b>: no responde igual dos veces. Cambia <b>la forma</b>, no debería cambiar <b>el fondo</b> — y cuando cambia el fondo, eso tiene nombre y lo veremos dentro de un rato.</p>
+    <p class="note">Excel aplica una regla escrita; las dos IA aprendieron de ejemplos. La predictiva da un número que se puede comprobar después. La generativa <b>no es determinista</b>: cambia <b>la forma</b>, no debería cambiar <b>el fondo</b>, y cuando cambia el fondo tiene nombre: lo veremos luego. El 72% es de ejemplo<span class="tag-ill">ilustrativo</span></p>
   </section>
 
   <!-- quién la hace ------------------------------------------------------ -->
@@ -1672,15 +1703,14 @@
 
   /* ---------- qué es ---------- */
   anims.whatis = function(el){
-    var boxes=el.querySelectorAll(".ask2 .box"), cols=el.querySelectorAll(".ask2 .same");
-    var rx=cols[0].querySelectorAll(".rep"), ra=cols[1].querySelectorAll(".rep"), vd=el.querySelectorAll(".verdict2");
+    var boxes=el.querySelectorAll(".ask2 .box"), cols=el.querySelectorAll(".ask2 .same"), vd=el.querySelectorAll(".verdict2");
+    var nc=cols.length, t0=300+boxes.length*650;
     el.querySelectorAll(".go").forEach(function(n){ n.classList.remove("go"); });
-    boxes.forEach(function(b,i){ after(300+i*700, function(){ b.classList.add("go"); }); });
-    for(var i=0;i<3;i++){ (function(i){
-      after(2000+i*1100, function(){ rx[i].classList.add("go"); });
-      after(2450+i*1100, function(){ ra[i].classList.add("go"); });
-    })(i); }
-    after(5500, function(){ vd.forEach(function(v){ v.classList.add("go"); }); });
+    boxes.forEach(function(b,i){ after(300+i*650, function(){ b.classList.add("go"); }); });
+    for(var i=0;i<3;i++){ for(var c=0;c<nc;c++){ (function(i,c){
+      after(t0+i*(nc*420+200)+c*420, function(){ cols[c].querySelectorAll(".rep")[i].classList.add("go"); });
+    })(i,c); } }
+    after(t0+3*(nc*420+200)+200, function(){ vd.forEach(function(v){ v.classList.add("go"); }); });
   };
 
   /* ---------- quién la hace ---------- */
