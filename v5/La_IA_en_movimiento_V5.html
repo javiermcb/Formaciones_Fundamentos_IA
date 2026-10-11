@@ -661,45 +661,6 @@
     </div>
   </section>
 
-  <!-- qué es ------------------------------------------------------------- -->
-  <section class="slide" data-anim="whatis" data-ch="Apertura">
-    <div class="eyebrow">Para empezar · cómo se le habla</div>
-    <h2>No hay que aprender su idioma: habla el tuyo</h2>
-    <div class="figure" style="flex-direction:column;justify-content:center">
-      <div class="ask2">
-        <div class="col">
-          <div class="box">
-            <h4>Cómo le pides algo a Excel</h4>
-            <div class="code">=BUSCARV(A2;Proveedores!A:D;4;FALSO)</div>
-            <p class="sub">Tienes que aprender su idioma. Un punto y coma de más y devuelve error.</p>
-          </div>
-          <div class="same">
-            <div class="rh">La misma fórmula, tres veces</div>
-            <div class="rep x"><i>1.ª</i><span>60</span></div>
-            <div class="rep x"><i>2.ª</i><span>60</span></div>
-            <div class="rep x"><i>3.ª</i><span>60</span></div>
-            <div class="verdict2">Siempre idéntico: <b>determinista</b></div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="box ai">
-            <h4>Cómo le pides algo a una IA</h4>
-            <div class="nat">«¿Qué plazo de pago acordamos con este proveedor?»</div>
-            <p class="sub">Le hablas como a un compañero. Puedes preguntarlo de quince formas distintas y todas funcionan. Eso es <b>lenguaje natural</b>, y a esa instrucción se le llama <b>prompt</b>.</p>
-          </div>
-          <div class="same ai">
-            <div class="rh">La misma pregunta, tres veces</div>
-            <div class="rep"><i>1.ª</i><span>«El plazo acordado es de <mark>60 días</mark> desde la fecha de factura.»</span></div>
-            <div class="rep"><i>2.ª</i><span>«Según el contrato, se acordaron <mark>60 días</mark> a contar desde la emisión.»</span></div>
-            <div class="rep"><i>3.ª</i><span>«<mark>60 días</mark> desde factura, según la cláusula 7.2.»</span></div>
-            <div class="verdict2">Cambian las palabras, no el dato: <b>no determinista</b></div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <p class="note"><b>No es determinista</b>: no responde igual dos veces. Cambia <b>la forma</b>, no debería cambiar <b>el fondo</b> — y cuando cambia el fondo, eso tiene nombre y lo veremos dentro de un rato.</p>
-  </section>
-
   <!-- agenda ------------------------------------------------------------- -->
   <section class="slide" data-anim="agenda" data-ch="Agenda">
     <div class="eyebrow">El recorrido de hoy</div>
@@ -757,6 +718,45 @@
       </div>
     </div>
     <p class="note">La diferencia importa para el negocio: un resultado que <b>se puede medir</b> se puede automatizar con umbrales; un texto nuevo <b>necesita a alguien que lo lea</b> antes de que salga de la empresa. Las dos son <b>aprendizaje automático</b> (el segundo círculo de la diapositiva anterior); solo la segunda es <b>IA generativa</b>, el círculo pequeño. Esta formación trata sobre todo de ella.</p>
+  </section>
+
+  <!-- qué es ------------------------------------------------------------- -->
+  <section class="slide" data-anim="whatis" data-ch="1 · Qué es">
+    <div class="eyebrow">Capítulo 1 · Qué es · un ejemplo para compararlas</div>
+    <h2>No hay que aprender su idioma: habla el tuyo</h2>
+    <div class="figure" style="flex-direction:column;justify-content:center">
+      <div class="ask2">
+        <div class="col">
+          <div class="box">
+            <h4>Cómo le pides algo a Excel</h4>
+            <div class="code">=BUSCARV(A2;Proveedores!A:D;4;FALSO)</div>
+            <p class="sub">Tienes que aprender su idioma. Un punto y coma de más y devuelve error.</p>
+          </div>
+          <div class="same">
+            <div class="rh">La misma fórmula, tres veces</div>
+            <div class="rep x"><i>1.ª</i><span>60</span></div>
+            <div class="rep x"><i>2.ª</i><span>60</span></div>
+            <div class="rep x"><i>3.ª</i><span>60</span></div>
+            <div class="verdict2">Siempre idéntico: <b>determinista</b></div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="box ai">
+            <h4>Cómo le pides algo a una IA</h4>
+            <div class="nat">«¿Qué plazo de pago acordamos con este proveedor?»</div>
+            <p class="sub">Le hablas como a un compañero. Puedes preguntarlo de quince formas distintas y todas funcionan. Eso es <b>lenguaje natural</b>, y a esa instrucción se le llama <b>prompt</b>.</p>
+          </div>
+          <div class="same ai">
+            <div class="rh">La misma pregunta, tres veces</div>
+            <div class="rep"><i>1.ª</i><span>«El plazo acordado es de <mark>60 días</mark> desde la fecha de factura.»</span></div>
+            <div class="rep"><i>2.ª</i><span>«Según el contrato, se acordaron <mark>60 días</mark> a contar desde la emisión.»</span></div>
+            <div class="rep"><i>3.ª</i><span>«<mark>60 días</mark> desde factura, según la cláusula 7.2.»</span></div>
+            <div class="verdict2">Cambian las palabras, no el dato: <b>no determinista</b></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="note">Excel no es IA predictiva: es software de reglas. Pero sirve para ver la diferencia entre algo que siempre responde igual y una IA que redacta. <b>No es determinista</b>: no responde igual dos veces. Cambia <b>la forma</b>, no debería cambiar <b>el fondo</b> — y cuando cambia el fondo, eso tiene nombre y lo veremos dentro de un rato.</p>
   </section>
 
   <!-- quién la hace ------------------------------------------------------ -->

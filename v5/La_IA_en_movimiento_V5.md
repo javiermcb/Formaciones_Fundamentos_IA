@@ -6,7 +6,7 @@ Mismas 34 diapositivas que la V4, reordenadas según el guion del profesor. Hilo
 
 ## Cambios respecto a la V4
 
-1. «No hay que aprender su idioma» (Excel frente a IA) pasa a ser la diapositiva 2, como gancho de apertura.
+1. «No hay que aprender su idioma» (Excel frente a IA) va justo después de «Dos familias», como ejemplo de cómo actúa cada una. El pie aclara que Excel no es IA predictiva, sino software de reglas.
 2. «Cómo funciona» pasa a ser el capítulo 2 y «Mercado» el capítulo 3; los rótulos de capítulo están renumerados.
 3. «Quién la hace» va antes de «¿Por qué ahora?».
 4. La alucinación va antes que RAG: primero el problema, luego el remedio.
@@ -19,10 +19,10 @@ Mismas 34 diapositivas que la V4, reordenadas según el guion del profesor. Hilo
 | # | Bloque | Diapositiva | # en V4 |
 |---|---|---|---|
 | 1 | Apertura | Portada | 1 |
-| 2 | Apertura | No hay que aprender su idioma: habla el tuyo | 6 |
-| 3 | Apertura | Cinco preguntas, en este orden | 2 |
-| 4 | 1 · Qué es | «IA» es una caja con otras cajas dentro | 3 |
-| 5 | 1 · Qué es | Dos familias: la IA que predice y la que redacta | 4 |
+| 2 | Apertura | Cinco preguntas, en este orden | 2 |
+| 3 | 1 · Qué es | «IA» es una caja con otras cajas dentro | 3 |
+| 4 | 1 · Qué es | Dos familias: la IA que predice y la que redacta | 4 |
+| 5 | 1 · Qué es | No hay que aprender su idioma: habla el tuyo (Excel frente a IA) | 6 |
 | 6 | 1 · Qué es | Detrás de cada nombre que vais a oír | 7 |
 | 7 | 1 · Qué es | ¿Por qué ahora, si existe desde 1956? | 5 |
 | 8 | 2 · Cómo funciona | Un camino fijo frente a un abanico de probabilidades | 12 |
