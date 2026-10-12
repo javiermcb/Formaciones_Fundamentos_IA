@@ -4,9 +4,15 @@
 
 La V5 con un gancho de inicio y su cierre: la clase dice qué palabras asocia a la IA al empezar y al terminar, y una diapositiva compara las dos. 37 diapositivas. La V5 se conserva intacta.
 
+## Cambios de texto (12 de octubre de 2026)
+
+- Portada: rótulo «Formación interna», subtítulo «Fundamentos y conceptos clave» y sin instrucciones de teclado.
+- Agenda: sin el pie sobre diapositivas ilustrativas.
+- Se quitan todas las etiquetas «ilustrativo». Los pies siguen diciendo cuándo una cifra es de ejemplo.
+
 ## Cambio en la diapositiva 6
 
-«Tres máquinas, la misma consulta» (antes «No hay que aprender su idioma»): entre Excel y la IA generativa se añade la IA predictiva (Machine Learning). Recibe los datos de un cliente y devuelve «riesgo de pago tardío: 72%» las tres veces. El 72% está marcado como ilustrativo.
+«Tres máquinas, la misma consulta» (antes «No hay que aprender su idioma»): entre Excel y la IA generativa se añade la IA predictiva (Machine Learning). Recibe los datos de un cliente y devuelve «riesgo de pago tardío: 72%» las tres veces. El pie indica que el 72% es un dato de ejemplo.
 
 ## Diapositivas nuevas
 

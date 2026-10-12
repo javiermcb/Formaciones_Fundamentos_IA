@@ -721,10 +721,10 @@
   <section class="slide cover" data-anim="cover" data-ch="Portada">
     <canvas id="netcanvas"></canvas>
     <div class="inner">
-      <div class="eyebrow">Formación interna · Administración · Finanzas · Contact Center</div>
+      <div class="eyebrow">Formación interna</div>
       <h1>La IA en movimiento</h1>
-      <p class="lede">Qué es, por qué ha llegado ahora, cómo funciona por dentro y qué hacer con ella el lunes. Sin tecnicismos: cada mecanismo se entiende de un vistazo cuando se ve funcionar.</p>
-      <p class="note" style="margin-top:2rem;padding:0">Foto a octubre de 2026. Avanza con las flechas, la barra espaciadora o haciendo clic. <b class="hl">R</b> repite la animación, <b class="hl">F</b> pantalla completa.</p>
+      <p class="lede">Fundamentos y conceptos clave</p>
+      <p class="note" style="margin-top:2rem;padding:0">Foto a octubre de 2026.</p>
       <p class="own-cover">© 2026 Javier Martín-Consuegra. Todos los derechos reservados.</p>
     </div>
   </section>
@@ -767,7 +767,6 @@
         <button class="ag" data-goto="ch5"><div class="n">5</div><h3>¿Con qué reglas?</h3><p>Dónde usarla, cómo pedir, qué revisar y qué exige la ley.</p></button>
       </div>
     </div>
-    <p class="note">Las diapositivas marcadas como <span class="tag-ill" style="margin:0">ilustrativo</span> explican un mecanismo con cifras de ejemplo. Todo lo demás lleva su fuente, recogida al final.</p>
   </section>
 
   <!-- 1 · qué cabe dentro --------------------------------------------- -->
@@ -863,7 +862,7 @@
         </div>
       </div>
     </div>
-    <p class="note">Excel aplica una regla escrita; las dos IA aprendieron de ejemplos. La predictiva da un número que se puede comprobar después. La generativa <b>no es determinista</b>: cambia <b>la forma</b>, no debería cambiar <b>el fondo</b>, y cuando cambia el fondo tiene nombre: lo veremos luego. El 72% es de ejemplo<span class="tag-ill">ilustrativo</span></p>
+    <p class="note">Excel aplica una regla escrita; las dos IA aprendieron de ejemplos. La predictiva da un número que se puede comprobar después. La generativa <b>no es determinista</b>: cambia <b>la forma</b>, no debería cambiar <b>el fondo</b>, y cuando cambia el fondo tiene nombre: lo veremos luego. El 72% es un dato de ejemplo.</p>
   </section>
 
   <!-- quién la hace ------------------------------------------------------ -->
@@ -938,7 +937,7 @@
           <text class="p-o lbl-s" x="814" y="219" text-anchor="middle" fill="#EDF2F0" opacity="0">Rechazar · 63%</text>
           <text x="556" y="272" class="lbl" fill="#67807A">Evalúa varias salidas y se queda con la más probable.</text>
         </svg>
-        <figcaption class="note" style="margin:0;padding-top:10px">El software tradicional ejecuta <b>la regla</b> que alguien escribió. La IA <b>puntúa alternativas y elige</b> — por eso tolera formatos nuevos, y por eso nunca es del todo predecible. Porcentajes de ejemplo.<span class="tag-ill">ilustrativo</span></figcaption>
+        <figcaption class="note" style="margin:0;padding-top:10px">El software tradicional ejecuta <b>la regla</b> que alguien escribió. La IA <b>puntúa alternativas y elige</b> — por eso tolera formatos nuevos, y por eso nunca es del todo predecible. Porcentajes de ejemplo.</figcaption>
       </figure>
     </div>
   </section>
@@ -1017,7 +1016,7 @@
         <div class="pt-total" id="pttotal"></div>
       </div>
     </div>
-    <p class="note">Cada paso parece casi seguro, pero la probabilidad de la palabra entera es <b>la multiplicación</b> de todos los pasos, y siempre baja. En una respuesta de cientos de pasos esas pequeñas dudas se acumulan: por eso hay que revisar. <span class="tag-ill" style="margin-left:4px">ilustrativo</span> Probabilidades de ejemplo, letra a letra y sin distinguir mayúsculas. El modelo real elige por tokens: « París» es un único token y lo elige en un solo paso.</p>
+    <p class="note">Cada paso parece casi seguro, pero la probabilidad de la palabra entera es <b>la multiplicación</b> de todos los pasos, y siempre baja. En una respuesta de cientos de pasos esas pequeñas dudas se acumulan: por eso hay que revisar. Probabilidades de ejemplo, letra a letra y sin distinguir mayúsculas. El modelo real elige por tokens: « París» es un único token y lo elige en un solo paso.</p>
   </section>
 
   <!-- 3 ---------------------------------------------------------------- -->
@@ -1034,7 +1033,7 @@
         </div>
       </div>
     </div>
-    <p class="note">Probabilidades de ejemplo<span class="tag-ill">ilustrativo</span>. Lo real es el mecanismo: en ningún momento consulta si la factura 4521 existe — solo <b>encadena la palabra más probable</b>, una y otra vez.</p>
+    <p class="note">Probabilidades de ejemplo. Lo real es el mecanismo: en ningún momento consulta si la factura 4521 existe — solo <b>encadena la palabra más probable</b>, una y otra vez.</p>
   </section>
 
   <!-- red neuronal · laboratorio ------------------------------------------- -->
@@ -1051,7 +1050,7 @@
     <div class="figure">
       <figure style="margin:0;width:100%;max-width:1040px">
         <svg id="nlsvg" viewBox="0 0 1040 330" role="img" aria-label="Red neuronal de tres capas: cuatro rasgos del correo, cuatro neuronas ocultas y tres posibles categorías con su probabilidad. Al activar o desactivar rasgos, la señal recorre la red y cambian las probabilidades."></svg>
-        <figcaption class="note" style="margin:0;padding-top:8px">Activa o quita rasgos y mira cómo viaja la señal. <b>Grosor de cada línea = peso de la conexión</b>; verde suma, naranja resta. Las neuronas del medio no tienen nombre: el modelo inventa sus propios rasgos. Esta red tiene 28 conexiones con pesos de ejemplo<span class="tag-ill">ilustrativo</span>; un modelo de lenguaje tiene miles de millones, y nadie los fija a mano: se ajustan solos durante el entrenamiento, a base de equivocarse y corregirse.</figcaption>
+        <figcaption class="note" style="margin:0;padding-top:8px">Activa o quita rasgos y mira cómo viaja la señal. <b>Grosor de cada línea = peso de la conexión</b>; verde suma, naranja resta. Las neuronas del medio no tienen nombre: el modelo inventa sus propios rasgos. Esta red tiene 28 conexiones con pesos de ejemplo; un modelo de lenguaje tiene miles de millones, y nadie los fija a mano: se ajustan solos durante el entrenamiento, a base de equivocarse y corregirse.</figcaption>
       </figure>
     </div>
   </section>
@@ -1145,7 +1144,7 @@
           <span class="chip"><b>Rampa:</b> impresión 3D industrial · coche autónomo en ciudades concretas</span>
           <span class="chip"><b>Meseta:</b> redes sociales · streaming · pagos por móvil</span>
         </div>
-        <figcaption class="note" style="margin:0;padding-top:10px">Las dos posiciones de IA (<b>agentes</b> e <b>IA generativa</b>) proceden de Gartner 2026. El resto, incluidos los chips, son ejemplos del recorrido típico de una tecnología, no posiciones oficiales.<span class="tag-ill">ilustrativo</span></figcaption>
+        <figcaption class="note" style="margin:0;padding-top:10px">Las dos posiciones de IA (<b>agentes</b> e <b>IA generativa</b>) proceden de Gartner 2026. El resto, incluidos los chips, son ejemplos del recorrido típico de una tecnología, no posiciones oficiales.</figcaption>
       </figure>
     </div>
   </section>
@@ -1312,7 +1311,7 @@
           </div>
         </div>
       </div>
-      <p class="jnote">Reparto de ejemplo<span class="tag-ill">ilustrativo</span>. El puesto no se vacía: cambia de forma. Encoge la parte que se puede describir con instrucciones y crece la que no.</p>
+      <p class="jnote">Reparto de ejemplo. El puesto no se vacía: cambia de forma. Encoge la parte que se puede describir con instrucciones y crece la que no.</p>
       <div class="facts" id="facts">
         <div class="fact"><b>39%</b><span>de las competencias clave de un trabajador cambiarán de aquí a 2030.</span><em>Foro Económico Mundial, Future of Jobs 2025</em></div>
         <div class="fact"><b>+170 / −92 M</b><span>empleos creados y desplazados en el mundo hasta 2030, por todas las causas, no solo la IA.</span><em>Foro Económico Mundial, Future of Jobs 2025</em></div>
