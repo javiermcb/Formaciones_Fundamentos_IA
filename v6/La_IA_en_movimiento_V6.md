@@ -6,7 +6,7 @@ La V5 con un gancho de inicio y su cierre: la clase dice qué palabras asocia a 
 
 ## Cambios de texto (12 de octubre de 2026)
 
-- Portada: rótulo «Formación interna», subtítulo «Fundamentos y conceptos clave» y sin instrucciones de teclado.
+- Portada: rótulo «Formación interna», subtítulo «Fundamentos y conceptos clave» y sin instrucciones de teclado; la línea de fecha dice solo «Octubre 2026».
 - Agenda: sin el pie sobre diapositivas ilustrativas.
 - Se quitan todas las etiquetas «ilustrativo». Los pies siguen diciendo cuándo una cifra es de ejemplo.
 
