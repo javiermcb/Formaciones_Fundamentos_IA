@@ -1059,6 +1059,7 @@
   <section class="slide" data-anim="train" data-ch="2 · Cómo funciona">
     <div class="eyebrow">Capítulo 2 · Cómo funciona · ciclo de vida</div>
     <h2>Estudiar la carrera y resolver el caso del día</h2>
+    <p class="lede" style="margin-bottom:.2rem">A la izquierda, <b style="color:var(--fg)">así se entrena el modelo</b>: sus pesos se ajustan con enormes cantidades de texto. A la derecha, el modelo ya entrenado en uso.</p>
     <div class="figure">
       <figure style="margin:0;width:100%;max-width:980px">
         <svg id="trainsvg" viewBox="0 0 980 300" role="img" aria-label="Fase de entrenamiento en la que los pesos se ajustan repetidamente y quedan fijos, seguida de la fase de inferencia en la que el modelo responde sin modificar esos pesos"></svg>
@@ -1865,14 +1866,14 @@
   function buildTrain(svg){
     if(svg.__b) return svg; svg.__b=true;
     svg.appendChild(NS("line",{x1:470,y1:30,x2:470,y2:270,stroke:"#2E413B","stroke-dasharray":"4 6"}));
-    var t1=NS("text",{x:30,y:28,class:"lbl",fill:"#9FB2AC"}); t1.textContent="ENTRENAMIENTO · UNA VEZ"; svg.appendChild(t1);
-    var t2=NS("text",{x:510,y:28,class:"lbl",fill:"#EDF2F0"}); t2.textContent="INFERENCIA · CADA DÍA"; svg.appendChild(t2);
+    var t1=NS("text",{x:30,y:28,class:"lbl",fill:"#9FB2AC"}); t1.textContent="ENTRENAR EL MODELO · UNA VEZ"; svg.appendChild(t1);
+    var t2=NS("text",{x:510,y:28,class:"lbl",fill:"#EDF2F0"}); t2.textContent="USAR EL MODELO (INFERENCIA) · CADA DÍA"; svg.appendChild(t2);
     for(var i=0;i<5;i++){
       for(var j=0;j<5;j++){
         svg.appendChild(NS("rect",{x:60+i*62,y:70+j*30,width:46,height:20,rx:3,fill:"#22322C",stroke:"#2E413B",class:"wgt","data-k":(i*5+j)}));
       }
     }
-    var c=NS("text",{x:195,y:262,class:"lbl",fill:"#67807A"}); c.textContent="los pesos se ajustan… y quedan fijos"; svg.appendChild(c);
+    var c=NS("text",{x:195,y:262,class:"lbl",fill:"#67807A"}); c.textContent="entrenamiento: los pesos se ajustan… y quedan fijos"; svg.appendChild(c);
     svg.appendChild(NS("rect",{x:520,y:110,width:120,height:54,rx:6,fill:"#1C2A25",stroke:"#3C5A54",class:"i-o",opacity:0}));
     var q=NS("text",{x:580,y:142,"text-anchor":"middle",opacity:0,class:"i-o lbl-s"}); q.textContent="Pregunta"; svg.appendChild(q);
     svg.appendChild(NS("line",{x1:648,y1:137,x2:706,y2:137,stroke:"#2C8C96","marker-end":"url(#ar)",class:"i-o",opacity:0}));

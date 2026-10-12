@@ -10,6 +10,10 @@ La V5 con un gancho de inicio y su cierre: la clase dice qué palabras asocia a 
 - Agenda: sin el pie sobre diapositivas ilustrativas.
 - Se quitan todas las etiquetas «ilustrativo». Los pies siguen diciendo cuándo una cifra es de ejemplo.
 
+## Cambio en la diapositiva 15
+
+«Estudiar la carrera y resolver el caso del día» dice expresamente que la parte izquierda es el entrenamiento del modelo: subtítulo nuevo y rótulos «Entrenar el modelo · una vez» y «Usar el modelo (inferencia) · cada día».
+
 ## Cambio en la diapositiva 6
 
 «Tres máquinas, la misma consulta» (antes «No hay que aprender su idioma»): entre Excel y la IA generativa se añade la IA predictiva (Machine Learning). Recibe los datos de un cliente y devuelve «riesgo de pago tardío: 72%» las tres veces. El pie indica que el 72% es un dato de ejemplo.
