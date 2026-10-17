@@ -112,6 +112,18 @@ tr.hl2 td{background:var(--petrol-soft)}
 .jfig .ar{stroke:var(--accent);stroke-width:2;fill:none;stroke-dasharray:6 5;animation:dash 1s linear infinite}
 @keyframes dash{to{stroke-dashoffset:-11}}
 @media(prefers-reduced-motion:reduce){.jfig .ar,.st2::after{animation:none}}
+.concept{flex:1;display:flex;flex-direction:column;gap:.8rem;justify-content:center;align-items:flex-start;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:clamp(12px,2.4vh,26px);cursor:pointer;min-width:0}
+.concept:hover{border-color:var(--petrol)}
+.concept.on{border-color:var(--accent);background:var(--accent-soft)}
+.concept ul{font-size:1.02em}
+.figin{width:100%;display:flex;flex-direction:column;gap:.8rem;align-items:stretch}
+.fichas{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:.4rem}
+.ficha{border:1px solid var(--line);border-radius:4px;padding:.35rem .45rem;font:400 .68rem var(--mono);background:var(--panel);opacity:.45;display:flex;justify-content:space-between;gap:.3rem;transition:opacity .2s}
+.ficha b{font-weight:500;color:var(--accent);visibility:hidden}
+.ficha.open{opacity:1;border-color:var(--accent)}.ficha.open b{visibility:visible}
+.count{display:flex;gap:1.5rem;flex-wrap:wrap;font:400 .8rem var(--mono);color:var(--mut)}
+.count span b{font:400 clamp(1.4rem,2.6vw,2.2rem) var(--serif);color:var(--fg);margin-left:.4rem}
+@media(max-width:820px){.fichas{grid-template-columns:repeat(4,minmax(0,1fr))}}
 /* explorer */
 .explorer{display:grid;grid-template-columns:minmax(0,15rem) minmax(0,1fr);gap:0;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--bg2)}
 @media(max-width:820px){.explorer{grid-template-columns:minmax(0,1fr)}}
@@ -215,19 +227,20 @@ a{color:var(--petrol)}
 </div></section>
 
 <!-- 5 APP VS DWH -->
-<section class="slide" data-title="Aplicación frente a Warehouse"><div class="wrap">
-  <p class="eyebrow">Qué es</p>
-  <h2>La aplicación sirve para trabajar; el Warehouse, para analizar</h2>
-  <div class="grid g2">
-    <div class="panel"><span class="tag acc">Aplicación (CRM · ERP · ATS)</span>
-      <ul class="clean" style="margin-top:.6rem"><li>Registra el día a día: una factura, una candidatura, una llamada.</li><li>Está pensada para guardar y editar un registro cada vez.</li><li>Cada aplicación guarda lo suyo, con su propia estructura.</li></ul></div>
-    <div class="panel"><span class="tag pet">Warehouse</span>
-      <ul class="clean" style="margin-top:.6rem"><li>Reúne las tablas de varias aplicaciones en un solo sitio.</li><li>Está pensado para leer muchas filas y responder preguntas.</li><li>Se consulta con SQL, el mismo lenguaje para todas las tablas.</li></ul></div>
-  </div>
-  <div class="panel flat">
-    <h3>Una pregunta: ¿cuántas facturas están vencidas?</h3>
-    <div class="row"><button class="btn ghost" id="qApp">Preguntar a la aplicación</button><button class="btn ghost" id="qDw">Preguntar al Warehouse</button></div>
-    <p id="qOut" class="msg" style="margin-top:.6rem">Elige una opción.</p>
+<section class="slide full" data-title="Aplicación frente a Warehouse"><div class="wrap">
+  <div><p class="eyebrow">Qué es</p><h2>La aplicación sirve para trabajar; el Warehouse, para analizar</h2></div>
+  <div class="journey">
+    <div class="stages">
+      <button class="concept" data-k="app"><span class="tag acc">Aplicación · CRM, ERP, ATS</span>
+        <ul class="clean"><li>Registra el día a día: una factura, una candidatura, una llamada.</li><li>Está pensada para guardar y editar un registro cada vez.</li><li>Cada aplicación guarda lo suyo, con su propia estructura.</li></ul></button>
+      <button class="concept" data-k="dw"><span class="tag pet">Warehouse</span>
+        <ul class="clean"><li>Reúne las tablas de varias aplicaciones en un solo sitio.</li><li>Está pensado para leer muchas filas y responder preguntas.</li><li>Se consulta con SQL, el mismo lenguaje para todas las tablas.</li></ul></button>
+    </div>
+    <div class="jdetail">
+      <div class="jdef"><p class="eyebrow">La pregunta</p><h3>¿Cuántas facturas están vencidas?</h3><p class="mut">Pulsa una de las dos opciones de la izquierda y mira cómo se respondería.</p></div>
+      <div class="jfig" id="qFig"><p class="mut">Elige una opción.</p></div>
+      <div class="jsim" id="qOut"><span class="mono">Respuesta</span><p class="mut">Todavía sin elegir.</p></div>
+    </div>
   </div>
   <p class="foot">Comparación general; cada aplicación puede ofrecer sus propios informes. Datos de ejemplo.</p>
 </div></section>
@@ -588,8 +601,19 @@ function selStage(i){stCur=Math.max(0,Math.min(ST.length-1,i));flowBtns.forEach(
   $('#jDef').innerHTML=`<h3>${s[0]}</h3><p>${s[2]}</p>`;$('#jFig').innerHTML=STSVG[stCur];$('#jSim').innerHTML=`<span class="mono">Es como…</span><p>${s[3]}</p>`}
 
 /* ====== app vs dwh ====== */
-$('#qApp').onclick=()=>{$('#qOut').innerHTML=`En general: abrir cliente por cliente (${DB['crm.clientes'].rows.length} fichas en este ejemplo) y contar a mano, o buscar un informe ya preparado.`};
-$('#qDw').onclick=()=>{const n=facturas.filter(f=>f.estado==='Vencida').length;$('#qOut').innerHTML=`Una consulta: <span class="mono">SELECT COUNT(*) FROM erp.facturas WHERE estado = 'Vencida'</span> → <b>${n}</b> facturas vencidas.`};
+(function(){const venc=DB['crm.clientes'].rows.map(c=>({e:c.empresa,n:facturas.filter(f=>f.cliente_id===c.cliente_id&&f.estado==='Vencida').length}));
+ const tot=venc.reduce((a,x)=>a+x.n,0);let timer=null;
+ const out=(h)=>{$('#qOut').innerHTML='<span class="mono">Respuesta</span>'+h};
+ function pick(k){clearInterval(timer);$$('.concept').forEach(b=>b.classList.toggle('on',b.dataset.k===k));const fig=$('#qFig');
+  if(k==='dw'){fig.innerHTML=`<div class="figin"><pre class="sql">${hl("SELECT COUNT(*)\nFROM erp.facturas\nWHERE estado = 'Vencida';")}</pre><div class="count"><span>Consultas<b>1</b></span><span>Facturas vencidas<b>${tot}</b></span></div></div>`;
+   out(`<p>Una consulta sobre la tabla de facturas devuelve <b>${tot}</b> al instante, sin abrir nada ficha por ficha.</p>`);return}
+  fig.innerHTML=`<div class="figin"><div class="count"><span>Fichas abiertas<b id="cA">0</b> / ${venc.length}</span><span>Vencidas contadas<b id="cV">0</b></span></div><div class="fichas">${venc.map((x,i)=>`<div class="ficha" id="fi${i}"><span>${x.e.replace('Cliente ','C')}</span><b>${x.n}</b></div>`).join('')}</div></div>`;
+  out('<p>En general: abrir la ficha de cada cliente y sumar a mano, o buscar un informe ya preparado. Va contando…</p>');
+  const reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches;let i=0,acc=0;
+  const step=()=>{if(i>=venc.length){clearInterval(timer);out(`<p>Tras abrir ${venc.length} fichas salen <b>${tot}</b> facturas vencidas. Con más datos, más fichas.</p>`);return}
+   $('#fi'+i).classList.add('open');acc+=venc[i].n;i++;$('#cA').textContent=i;$('#cV').textContent=acc};
+  if(reduce){while(i<=venc.length)step()}else timer=setInterval(step,320)}
+ $$('.concept').forEach(b=>b.onclick=()=>pick(b.dataset.k))})();
 
 /* ====== fuentes ====== */
 (function(){const box=$('#srcCards');Object.entries(SRC).forEach(([n,s])=>{const d=document.createElement('button');d.className='panel';d.style.cssText='text-align:left;cursor:pointer';
