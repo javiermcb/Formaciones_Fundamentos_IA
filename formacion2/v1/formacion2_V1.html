@@ -136,6 +136,15 @@ tr.hl2 td{background:var(--petrol-soft)}
 .new{animation:flash 1.6s ease-out}
 @keyframes flash{from{background:var(--accent-soft);color:var(--accent)}}
 @media(prefers-reduced-motion:reduce){.new{animation:none}}
+.jgrid{grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1.6fr)}
+@media(max-width:820px){.jgrid{grid-template-columns:minmax(0,1fr)}}
+/* JOIN */
+.jtop{display:grid;grid-template-columns:200px minmax(0,1fr);gap:12px;align-items:center}
+@media(max-width:820px){.jtop{grid-template-columns:minmax(0,1fr)}#jVenn{max-width:220px}}
+.jt{max-height:26vh}
+tr.jm td{background:var(--petrol-soft)}tr.ju td{background:var(--accent-soft)}tr.jd td{opacity:.4;text-decoration:line-through}
+tr.jh td{box-shadow:inset 0 2px 0 var(--fg),inset 0 -2px 0 var(--fg)}
+.lg{display:inline-block;width:.9rem;height:.7rem;background:var(--c);border:1px solid var(--line);vertical-align:-.05rem}
 /* explorer */
 .explorer{display:grid;grid-template-columns:minmax(0,15rem) minmax(0,1fr);gap:0;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--bg2)}
 @media(max-width:820px){.explorer{grid-template-columns:minmax(0,1fr)}}
@@ -328,17 +337,20 @@ a{color:var(--petrol)}
 <!-- 12 JOIN -->
 <section class="slide" data-title="Unir tablas"><div class="wrap">
   <p class="eyebrow">Consultas</p>
-  <h2>Unir tablas con JOIN</h2>
-  <p class="lead">Pasa el ratón (o pulsa) sobre una oferta para ver sus candidaturas.</p>
-  <div class="row"><button class="btn ghost on" id="jInner">INNER JOIN</button><button class="btn ghost" id="jLeft">LEFT JOIN</button></div>
-  <div class="grid g3" style="align-items:start">
-    <div><p class="mono small mut">ats.ofertas</p><div class="tbl-wrap"><table id="jA"></table></div></div>
-    <div><p class="mono small mut">ats.candidaturas</p><div class="tbl-wrap"><table id="jB"></table></div></div>
-    <div><p class="mono small mut">Resultado</p><div class="tbl-wrap"><table id="jR"></table></div></div>
+  <h2>Tipos de JOIN: qué filas se quedan</h2>
+  <div class="ctl">
+    <label>Tabla izquierda<select id="jA"></select></label>
+    <label>Tabla derecha<select id="jB"></select></label>
+    <div class="row" id="jTypes"><button class="btn ghost on" data-t="INNER">INNER JOIN</button><button class="btn ghost" data-t="LEFT">LEFT JOIN</button><button class="btn ghost" data-t="RIGHT">RIGHT JOIN</button></div>
   </div>
-  <pre class="sql" id="jSql"></pre>
+  <div class="jtop"><div id="jVenn"></div><div style="min-width:0;display:flex;flex-direction:column;gap:.4rem"><pre class="sql" id="jSql"></pre><p class="mono small mut" id="jCount"></p></div></div>
+  <div class="grid jgrid" style="align-items:start">
+    <div><p class="mono small mut" id="jLa"></p><div class="tbl-wrap jt"><table id="jTa"></table></div></div>
+    <div><p class="mono small mut" id="jLb"></p><div class="tbl-wrap jt"><table id="jTb"></table></div></div>
+    <div><p class="mono small mut">Resultado</p><div class="tbl-wrap jt"><table id="jTr"></table></div></div>
+  </div>
   <p class="note pet" id="jNote"></p>
-  <p class="foot">Datos de ejemplo.</p>
+  <p class="foot"><span class="lg" style="--c:var(--petrol-soft)"></span> coincide &nbsp; <span class="lg" style="--c:var(--accent-soft)"></span> sin pareja, se queda &nbsp; <span class="lg" style="--c:transparent;border-style:dashed"></span> sin pareja, se descarta. Pasa el ratón (o pulsa) sobre una fila para ver su pareja. Datos de ejemplo.</p>
 </div></section>
 
 <!-- 13 JOIN DUPLICA -->
@@ -566,7 +578,7 @@ const isKey=c=>/_id$/.test(c);
 /* ====== helpers de tabla y SQL ====== */
 function htmlTable(cols,rows,types){const h='<tr>'+cols.map(c=>`<th class="${types&&types[c]==='num'?'n':''}">${esc(c)}</th>`).join('')+'</tr>';
   const b=rows.map(r=>'<tr>'+cols.map(c=>{const v=r[c];if(v===null)return '<td class="null">NULL</td>';const num=typeof v==='number';return `<td class="${num?'n':''}">${num&&!isKey(c)?fmt(v):esc(v)}</td>`}).join('')+'</tr>').join('');return h+b}
-function hl(sql){return esc(sql).replace(/('[^']*')|(--.*)|\b(SELECT|TOP|FROM|WHERE|GROUP BY|ORDER BY|DESC|ASC|AS|INNER JOIN|LEFT JOIN|JOIN|ON|CREATE VIEW|AND)\b|\b(COUNT|SUM|AVG)\b/g,(m,s,c,k,f)=>s?`<span class="s">${s}</span>`:c?`<span class="c">${c}</span>`:k?`<span class="k">${k}</span>`:`<span class="f">${f}</span>`)}
+function hl(sql){return esc(sql).replace(/('[^']*')|(--.*)|\b(SELECT|TOP|FROM|WHERE|GROUP BY|ORDER BY|DESC|ASC|AS|INNER JOIN|LEFT JOIN|RIGHT JOIN|JOIN|ON|CREATE VIEW|AND)\b|\b(COUNT|SUM|AVG)\b/g,(m,s,c,k,f)=>s?`<span class="s">${s}</span>`:c?`<span class="c">${c}</span>`:k?`<span class="k">${k}</span>`:`<span class="f">${f}</span>`)}
 function cmp(a,op,b){return op==='='?a==b:op==='<>'?a!=b:op==='>'?a>b:a<b}
 const aggName=q=>q.fn==='COUNT'?'total':(q.fn==='SUM'?'suma_':'media_')+q.fcol;
 function toSQL(q){const T=DB[q.table];const an=aggName(q);
@@ -782,7 +794,7 @@ function mountMulti(root){
   const ids=st.cols.length?st.cols:allIds();const names=ids.map(colOf);const head=ids.map((id,i)=>names.filter(n=>n===names[i]).length>1?ref(id):names[i]);
   const types={};ids.forEach((id,i)=>types[head[i]]=typeOf(id));
   const out=rows.map(r=>Object.fromEntries(ids.map((id,i)=>[head[i],r[id]])));
-  $('[data-n]',root).textContent=`${total} fila${total===1?'':'s'}${st.top&&total>st.top?` (se muestran ${st.top})`:''}${st.B?` · unidas por ${sharedKey(st.A,st.B)}`:''}`;
+  $('[data-n]',root).textContent=`${total} fila${total===1?'':'s'}${st.top&&total>st.top?` (se muestran ${st.top})`:''}${st.B?` · INNER JOIN por ${sharedKey(st.A,st.B)}: solo filas con pareja`:''}`;
   $('[data-res]',root).innerHTML=ids.length?htmlTable(head,out,types):'<tr><td class="null">Marca algún campo.</td></tr>';
   if(fresh){const i=ids.indexOf(fresh);if(i>=0)$$('[data-res] tr',root).forEach(tr=>tr.children[i]&&tr.children[i].classList.add('new'))}}
  build()}
@@ -820,19 +832,51 @@ const b2=mountBuilder($('#bld2'),{table:'ats.candidaturas',group:'fase',fn:'COUN
 const RC=[['Candidaturas por fase',{table:'ats.candidaturas',group:'fase',fn:'COUNT',ord:'total',dir:'DESC',top:0}],['Facturación por estado',{table:'erp.facturas',group:'estado',fn:'SUM',fcol:'importe',ord:'suma_importe',dir:'DESC',top:0}],['Importe medio por etapa',{table:'crm.oportunidades',group:'etapa',fn:'AVG',fcol:'importe',ord:'media_importe',dir:'DESC',top:0}],['Clientes por sector',{table:'crm.clientes',group:'sector',fn:'COUNT',ord:'total',dir:'DESC',top:0}]];
 RC.forEach(([n,o])=>{const b=document.createElement('button');b.className='btn ghost';b.textContent=n;b.onclick=()=>b2.set(o);$('#recipes').appendChild(b)});
 
-/* ====== JOIN ====== */
-(function(){const O=[{oferta_id:301,puesto:'Analista de datos'},{oferta_id:302,puesto:'Gestor de cuentas'},{oferta_id:303,puesto:'Técnico de soporte'},{oferta_id:304,puesto:'Coordinador'}];
- const C=[{candidatura_id:8001,oferta_id:301},{candidatura_id:8002,oferta_id:301},{candidatura_id:8003,oferta_id:302},{candidatura_id:8004,oferta_id:302},{candidatura_id:8005,oferta_id:302}];
- let left=false,hov=null;
- function draw(){$('#jA').innerHTML=htmlTable(['oferta_id','puesto'],O);$('#jB').innerHTML=htmlTable(['candidatura_id','oferta_id'],C);
-  const res=[];O.forEach(o=>{const m=C.filter(c=>c.oferta_id===o.oferta_id);if(m.length)m.forEach(c=>res.push({puesto:o.puesto,candidatura_id:c.candidatura_id,o:o.oferta_id}));else if(left)res.push({puesto:o.puesto,candidatura_id:null,o:o.oferta_id})});
-  $('#jR').innerHTML=htmlTable(['puesto','candidatura_id'],res);
-  [['#jA',(i)=>O[i].oferta_id],['#jB',(i)=>C[i].oferta_id],['#jR',(i)=>res[i].o]].forEach(([s,f])=>$$(s+' tr',document).slice(1).forEach((tr,i)=>{tr.style.cursor='pointer';const id=f(i);tr.onmouseenter=tr.onclick=()=>{if(hov===id)return;hov=id;mark()};if(id===hov)tr.className='hl'}));
-  $('#jSql').innerHTML=hl(`SELECT o.puesto, c.candidatura_id\nFROM ats.ofertas AS o\n${left?'LEFT JOIN':'INNER JOIN'} ats.candidaturas AS c\n  ON o.oferta_id = c.oferta_id;`);
-  $('#jNote').textContent=left?'LEFT JOIN conserva todas las ofertas. Las que no tienen candidaturas salen con NULL: así se detectan los huecos.':'INNER JOIN solo deja las ofertas que tienen candidaturas. Coordinador y Técnico de soporte desaparecen del resultado.'}
- function mark(){['#jA','#jB','#jR'].forEach(s=>$$(s+' tr').slice(1).forEach(tr=>tr.className=''));draw()}
- $('#jInner').onclick=()=>{left=false;$('#jInner').classList.add('on');$('#jLeft').classList.remove('on');draw()};
- $('#jLeft').onclick=()=>{left=true;$('#jLeft').classList.add('on');$('#jInner').classList.remove('on');draw()};draw()})();
+/* ====== JOIN: tipos ====== */
+(function(){const MINI={
+ 'crm.clientes':{cols:['cliente_id','empresa'],rows:[[1001,'Cliente 01'],[1002,'Cliente 02'],[1003,'Cliente 03'],[1004,'Cliente 04'],[1005,'Cliente 05']]},
+ 'erp.facturas':{cols:['factura_id','cliente_id','importe'],rows:[[9001,1001,2600],[9002,1001,800],[9003,1002,13800],[9004,1004,7900],[9005,1099,4300]]},
+ 'ats.ofertas':{cols:['oferta_id','puesto'],rows:[[301,'Analista de datos'],[302,'Gestor de cuentas'],[303,'Técnico de soporte'],[304,'Coordinador']]},
+ 'ats.candidatos':{cols:['candidato_id','ciudad'],rows:[[7001,'Madrid'],[7002,'Valencia'],[7003,'Sevilla'],[7004,'Madrid']]},
+ 'ats.candidaturas':{cols:['candidatura_id','oferta_id','candidato_id'],rows:[[8001,301,7001],[8002,301,7001],[8003,302,7003],[8004,302,7099],[8005,399,7004]]}};
+ Object.values(MINI).forEach(t=>t.rows=t.rows.map(r=>Object.fromEntries(t.cols.map((c,i)=>[c,r[i]]))));
+ const names=Object.keys(MINI);const sk=(a,b)=>MINI[a].cols.filter(isKey).find(c=>MINI[b].cols.includes(c))||null;
+ const partners=a=>names.filter(t=>t!==a&&sk(a,t));
+ let A='crm.clientes',B='erp.facturas',type='INNER',hov=null;
+ const selA=$('#jA'),selB=$('#jB');
+ selA.innerHTML=names.filter(t=>partners(t).length).map(t=>`<option>${t}</option>`).join('');
+ function fillB(){selB.innerHTML=partners(A).map(t=>`<option ${t===B?'selected':''}>${t}</option>`).join('');if(!partners(A).includes(B))B=partners(A)[0];selB.value=B}
+ selA.value=A;fillB();
+ const tr=(t,al)=>MINI[t].cols.map(c=>al+'.'+c);
+ function venn(){const L=type==='LEFT',Rr=type==='RIGHT';
+  return `<svg viewBox="0 0 200 100" role="img" aria-label="Diagrama de ${type} JOIN" style="width:100%;height:auto;max-height:110px"><defs><clipPath id="jcp"><circle cx="75" cy="50" r="38"/></clipPath></defs>
+  <circle cx="75" cy="50" r="38" style="fill:${L?'var(--accent-soft)':'none'}"/><circle cx="125" cy="50" r="38" style="fill:${Rr?'var(--accent-soft)':'none'}"/>
+  <circle cx="125" cy="50" r="38" clip-path="url(#jcp)" style="fill:var(--petrol-soft)"/>
+  <circle cx="75" cy="50" r="38" style="fill:none;stroke:${L?'var(--accent)':'var(--line)'};stroke-width:1.5"/><circle cx="125" cy="50" r="38" style="fill:none;stroke:${Rr?'var(--accent)':'var(--line)'};stroke-width:1.5"/>
+  <text x="52" y="54" text-anchor="middle" style="font:500 10px 'IBM Plex Mono',monospace;fill:var(--fg)">izq.</text><text x="148" y="54" text-anchor="middle" style="font:500 10px 'IBM Plex Mono',monospace;fill:var(--fg)">der.</text><text x="100" y="54" text-anchor="middle" style="font:500 9px 'IBM Plex Mono',monospace;fill:var(--petrol)">pareja</text></svg>`}
+ function put(sel,cols,rows,cls,keys,types){const t=$(sel);t.innerHTML=htmlTable(cols,rows,types);$$('tr',t).slice(1).forEach((r,i)=>{r.className=cls[i];r.dataset.k=keys[i];r.style.cursor='pointer';r.onmouseenter=r.onclick=()=>{hov=r.dataset.k;mark()}})}
+ function mark(){$$('#jTa tr,#jTb tr,#jTr tr').forEach(r=>r.classList.toggle('jh',hov!==null&&r.dataset.k===String(hov)))}
+ function draw(){const key=sk(A,B),a=MINI[A],b=MINI[B],al=ALIAS[A],bl=ALIAS[B];
+  const mA=a.rows.map(r=>b.rows.some(x=>x[key]===r[key])),mB=b.rows.map(r=>a.rows.some(x=>x[key]===r[key]));
+  const keepA=type==='LEFT',keepB=type==='RIGHT';
+  const out=[];
+  if(type==='RIGHT'){b.rows.forEach((x,i)=>{const ms=a.rows.filter(r=>r[key]===x[key]);if(ms.length)ms.forEach(r=>out.push({a:r,b:x,k:x[key],m:true}));else out.push({a:null,b:x,k:x[key],m:false})})}
+  else a.rows.forEach((r,i)=>{const ms=b.rows.filter(x=>x[key]===r[key]);if(ms.length)ms.forEach(x=>out.push({a:r,b:x,k:r[key],m:true}));else if(keepA)out.push({a:r,b:null,k:r[key],m:false})});
+  const cls=(m,keep)=>m?'jm':keep?'ju':'jd';
+  $('#jLa').textContent=`${A} · izquierda`;$('#jLb').textContent=`${B} · derecha`;
+  put('#jTa',a.cols,a.rows,mA.map(m=>cls(m,keepA)),a.rows.map(r=>r[key]));put('#jTb',b.cols,b.rows,mB.map(m=>cls(m,keepB)),b.rows.map(r=>r[key]));
+  const sel=[...a.cols.map(c=>[al,c]),...b.cols.map(c=>[bl,c])];const hc=sel.map(([x,c])=>sel.filter(y=>y[1]===c).length>1?x+'.'+c:c);const sq=tr(A,al).concat(tr(B,bl));const rows=out.map(o=>Object.fromEntries(sel.map(([x,c],i)=>[hc[i],(x===al?o.a:o.b)?(x===al?o.a:o.b)[c]:null])));
+  put('#jTr',hc,rows,out.map(o=>o.m?'jm':'ju'),out.map(o=>o.k));
+  $('#jSql').innerHTML=hl(`SELECT ${sq.join(', ')}\nFROM ${A} AS ${al}\n${type} JOIN ${B} AS ${bl}\n  ON ${al}.${key} = ${bl}.${key};`);
+  const nm=out.filter(o=>o.m).length,la=mA.filter(m=>!m).length,lb=mB.filter(m=>!m).length;
+  $('#jCount').textContent=`${nm} fila${nm===1?'':'s'} con pareja · ${la} solo en la izquierda · ${lb} solo en la derecha → el resultado tiene ${out.length}`;
+  const dropA=type==='LEFT'?0:la,dropB=type==='RIGHT'?0:lb;
+  $('#jNote').textContent=type==='INNER'?`INNER JOIN deja solo las filas con pareja en las dos tablas. Se descartan ${la} de la izquierda y ${lb} de la derecha.`
+   :type==='LEFT'?`LEFT JOIN conserva todas las filas de la izquierda (${a.rows.length}). Las ${la} sin pareja salen con NULL en la derecha. Las ${lb} solo de la derecha se descartan.`
+   :`RIGHT JOIN conserva todas las filas de la derecha (${b.rows.length}). Las ${lb} sin pareja salen con NULL en la izquierda. Las ${la} solo de la izquierda se descartan.`;
+  $('#jVenn').innerHTML=venn();mark()}
+ selA.onchange=()=>{A=selA.value;fillB();hov=null;draw()};selB.onchange=()=>{B=selB.value;hov=null;draw()};
+ $$('#jTypes button').forEach(b=>b.onclick=()=>{type=b.dataset.t;$$('#jTypes button').forEach(x=>x.classList.toggle('on',x===b));draw()});draw()})();
 
 /* ====== JOIN que duplica ====== */
 (function(){const F=[{factura_id:1,importe:100},{factura_id:2,importe:200},{factura_id:3,importe:50}];

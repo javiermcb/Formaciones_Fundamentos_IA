@@ -13,7 +13,7 @@ Audiencia: equipo de Innovation & Analytics, sin nivel de SQL. Duración: 1 hora
 | Gancho | 1 Portada · 2 Palabras antes |
 | Qué es | 3 Ruta · 4 Viaje del dato · 5 Aplicación vs Warehouse · 6 Dónde encaja en Fabric |
 | Nuestras tablas | 7 Explorador (tres aplicaciones, un Warehouse) |
-| Consultas | 8 SQL, el lenguaje del Warehouse · 9 Filtrar y ordenar · 10 Agrupar · 11 JOIN · 12 JOIN que duplica |
+| Consultas | 8 SQL, el lenguaje del Warehouse · 9 Filtrar y ordenar · 10 Agrupar · 11 Tipos de JOIN (interactiva) · 12 JOIN que duplica |
 | Vistas | 13 Crear una vista |
 | Modelo semántico | 14 Qué es (4 conceptos) · 15 Relaciones · 16 Medidas · 17 Modos de almacenamiento · 18 Crear el modelo |
 | Power BI | 19 Informe simulado · 20 Guion de la demo |
