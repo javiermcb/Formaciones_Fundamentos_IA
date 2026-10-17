@@ -133,6 +133,9 @@ tr.hl2 td{background:var(--petrol-soft)}
 .verb{display:flex;flex-direction:column;gap:.35rem;align-items:flex-start}
 .verb b{font:600 clamp(1.2rem,2vw,1.7rem) var(--serif)}
 .verb code{font:500 .85rem var(--mono);color:var(--accent)}
+.new{animation:flash 1.6s ease-out}
+@keyframes flash{from{background:var(--accent-soft);color:var(--accent)}}
+@media(prefers-reduced-motion:reduce){.new{animation:none}}
 /* explorer */
 .explorer{display:grid;grid-template-columns:minmax(0,15rem) minmax(0,1fr);gap:0;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--bg2)}
 @media(max-width:820px){.explorer{grid-template-columns:minmax(0,1fr)}}
@@ -307,9 +310,9 @@ a{color:var(--petrol)}
 <!-- 10 CONSTRUCTOR 1 -->
 <section class="slide" data-title="Filtrar y ordenar"><div class="wrap">
   <p class="eyebrow">Consultas</p>
-  <h2>Filtrar y ordenar: tú eliges, el SQL se escribe solo</h2>
+  <h2>Elige tablas y campos: el SQL se escribe solo</h2>
   <div class="panel flat" id="bld1"></div>
-  <p class="foot">Simulación sobre tablas de ejemplo. En T-SQL se limita con TOP, no con LIMIT.</p>
+  <p class="foot">Simulación sobre tablas de ejemplo. En T-SQL se limita con TOP, no con LIMIT. Al unir dos tablas, el SQL usa JOIN y la columna que tienen en común.</p>
 </div></section>
 
 <!-- 11 CONSTRUCTOR 2 -->
@@ -732,6 +735,58 @@ drawExplorer();onShow('#tree',drawExplorer);
   const go=()=>{$$('span',pre).forEach(x=>x.style.background='');b.style.background='var(--accent-soft)';$('#anatTxt').innerHTML=`<p>${p[1]}</p>`};b.onclick=go;b.onkeydown=e=>{if(e.key==='Enter')go()};pre.appendChild(b)});
  $('#anatTxt').innerHTML='<p class="mut">Pulsa una parte de la consulta.</p>'})();
 
+/* ====== constructor con dos tablas (filtrar, ordenar y elegir campos) ====== */
+const ALIAS={'crm.clientes':'cl','crm.oportunidades':'op','erp.facturas':'fa','erp.lineas_factura':'li','ats.ofertas':'of','ats.candidatos':'cd','ats.candidaturas':'ca'};
+const sharedKey=(a,b)=>DB[a].cols.filter(isKey).find(c=>DB[b].cols.includes(c))||null;
+function mountMulti(root){
+ const st={A:'erp.facturas',B:'crm.clientes',cols:['fa.factura_id','cl.empresa','fa.importe','fa.estado'],wcol:'fa.estado',wop:'=',wval:'Vencida',ord:'fa.importe',dir:'DESC',top:5};
+ let fresh=null;const tabs=Object.keys(DB);
+ const partners=a=>tabs.filter(t=>t!==a&&sharedKey(a,t));
+ const tabOf=id=>tabs.find(t=>ALIAS[t]===id.split('.')[0]);
+ const colOf=id=>id.split('.')[1];
+ const allIds=()=>[st.A,st.B].filter(Boolean).flatMap(t=>DB[t].cols.map(c=>ALIAS[t]+'.'+c));
+ const ref=id=>st.B?id:colOf(id);
+ const typeOf=id=>DB[tabOf(id)].types[colOf(id)];
+ function valid(){const ok=new Set(allIds());st.cols=st.cols.filter(c=>ok.has(c));if(!ok.has(st.wcol)){st.wcol='';st.wval=''}if(!ok.has(st.ord))st.ord=''}
+ function build(){if(st.B&&!partners(st.A).includes(st.B))st.B='';valid();
+  const grp=t=>`<div style="display:flex;flex-wrap:wrap;gap:.3rem .5rem;align-items:center"><span class="mono small" style="color:var(--accent);min-width:8.5rem">${t}</span><div class="chk">${DB[t].cols.map(c=>{const id=ALIAS[t]+'.'+c;return `<label><input type="checkbox" data-id="${id}" ${st.cols.includes(id)?'checked':''}>${c}</label>`}).join('')}</div></div>`;
+  const opts=(sel,empty)=>`${empty?`<option value="">${empty}</option>`:''}${allIds().map(id=>`<option value="${id}" ${id===sel?'selected':''}>${ref(id)}</option>`).join('')}`;
+  root.innerHTML=`<div class="ctl">
+   <label>Tabla<select data-k="A">${tabs.map(t=>`<option ${t===st.A?'selected':''}>${t}</option>`).join('')}</select></label>
+   <label>Unir con<select data-k="B"><option value="">— ninguna —</option>${partners(st.A).map(t=>`<option ${t===st.B?'selected':''}>${t}</option>`).join('')}</select></label>
+   <label>Filtrar por<select data-k="wcol">${opts(st.wcol,'— sin filtro —')}</select></label>
+   <label>Operador<select data-k="wop">${['=','<>','>','<'].map(o=>`<option ${o===st.wop?'selected':''}>${esc(o)}</option>`).join('')}</select></label>
+   <label>Valor<input type="text" data-k="wval" value="${esc(st.wval)}" size="9" list="dlm"></label><datalist id="dlm"></datalist>
+   <label>Ordenar por<select data-k="ord">${opts(st.ord,'— sin orden —')}</select></label>
+   <label>Sentido<select data-k="dir"><option ${st.dir==='DESC'?'selected':''}>DESC</option><option ${st.dir==='ASC'?'selected':''}>ASC</option></select></label>
+   <label>TOP<input type="number" data-k="top" min="0" max="50" value="${st.top}" style="width:4.5rem"></label></div>
+   <div style="margin-top:.7rem;display:flex;flex-direction:column;gap:.4rem"><span class="mono mut" style="font-size:.66rem;letter-spacing:.08em">CAMPOS · MARCA LOS QUE QUIERAS, DE UNA O DE LAS DOS TABLAS: ENTRAN EN EL RESULTADO EN ESE ORDEN</span>${grp(st.A)}${st.B?grp(st.B):''}</div>
+   <pre class="sql" data-sql style="margin-top:.7rem"></pre><p class="mono small mut" data-n style="margin:.4rem 0"></p><div class="tbl-wrap"><table data-res></table></div>`;
+  $$('[data-k]',root).forEach(e=>e.addEventListener(e.tagName==='INPUT'?'input':'change',()=>{const k=e.dataset.k;st[k]=k==='top'?Math.max(0,Math.min(50,Number(e.value)||0)):e.value;
+   if(k==='A'||k==='B'){fresh=null;build()}else if(k==='wcol'){if(!st.wcol)st.wval='';fillDl();run()}else run()}));
+  $$('[data-id]',root).forEach(e=>e.onchange=()=>{const id=e.dataset.id;if(e.checked){st.cols.push(id);fresh=id}else{st.cols=st.cols.filter(x=>x!==id);fresh=null}run()});
+  fillDl();run()}
+ function fillDl(){const dl=$('#dlm',root);if(!dl)return;dl.innerHTML=st.wcol&&typeOf(st.wcol)==='texto'?[...new Set(DB[tabOf(st.wcol)].rows.map(r=>r[colOf(st.wcol)]))].map(v=>`<option value="${esc(v)}">`).join(''):''}
+ const pref=(t,r)=>Object.fromEntries(Object.entries(r).map(([k,v])=>[ALIAS[t]+'.'+k,v]));
+ function rowsAll(){const ra=DB[st.A].rows.map(r=>pref(st.A,r));if(!st.B)return ra;const key=sharedKey(st.A,st.B),kA=ALIAS[st.A]+'.'+key,kB=ALIAS[st.B]+'.'+key;
+  const m=new Map();DB[st.B].rows.map(r=>pref(st.B,r)).forEach(r=>(m.get(r[kB])||m.set(r[kB],[]).get(r[kB])).push(r));
+  const out=[];ra.forEach(r=>(m.get(r[kA])||[]).forEach(x=>out.push({...r,...x})));return out}
+ function sql(){const cols=st.cols.length?st.cols.map(ref).join(', '):'*';let q=`SELECT ${st.top?'TOP '+st.top+' ':''}${cols}\n`;
+  if(st.B){const key=sharedKey(st.A,st.B);q+=`FROM ${st.A} AS ${ALIAS[st.A]}\nINNER JOIN ${st.B} AS ${ALIAS[st.B]}\n  ON ${ALIAS[st.A]}.${key} = ${ALIAS[st.B]}.${key}`}else q+=`FROM ${st.A}`;
+  if(st.wcol&&st.wval!==''){const v=typeOf(st.wcol)==='num'?Number(st.wval):`'${String(st.wval).replace(/'/g,"''")}'`;q+=`\nWHERE ${ref(st.wcol)} ${st.wop} ${v}`}
+  if(st.ord)q+=`\nORDER BY ${ref(st.ord)} ${st.dir}`;return q+';'}
+ function run(){$('[data-sql]',root).innerHTML=hl(sql());let rows=rowsAll();
+  if(st.wcol&&st.wval!==''){const v=typeOf(st.wcol)==='num'?Number(st.wval):st.wval;rows=rows.filter(r=>cmp(r[st.wcol],st.wop,v))}
+  if(st.ord){const d=st.dir==='DESC'?-1:1;rows=[...rows].sort((a,b)=>(a[st.ord]>b[st.ord]?1:a[st.ord]<b[st.ord]?-1:0)*d)}
+  const total=rows.length;if(st.top)rows=rows.slice(0,st.top);
+  const ids=st.cols.length?st.cols:allIds();const names=ids.map(colOf);const head=ids.map((id,i)=>names.filter(n=>n===names[i]).length>1?ref(id):names[i]);
+  const types={};ids.forEach((id,i)=>types[head[i]]=typeOf(id));
+  const out=rows.map(r=>Object.fromEntries(ids.map((id,i)=>[head[i],r[id]])));
+  $('[data-n]',root).textContent=`${total} fila${total===1?'':'s'}${st.top&&total>st.top?` (se muestran ${st.top})`:''}${st.B?` · unidas por ${sharedKey(st.A,st.B)}`:''}`;
+  $('[data-res]',root).innerHTML=ids.length?htmlTable(head,out,types):'<tr><td class="null">Marca algún campo.</td></tr>';
+  if(fresh){const i=ids.indexOf(fresh);if(i>=0)$$('[data-res] tr',root).forEach(tr=>tr.children[i]&&tr.children[i].classList.add('new'))}}
+ build()}
+
 /* ====== constructor ====== */
 function mountBuilder(root,init,opt){opt=opt||{};const st=Object.assign({table:'erp.facturas',cols:[],wcol:'',wop:'=',wval:'',group:'',fn:'COUNT',fcol:'',ord:'',dir:'DESC',top:10},init);
   const tabs=Object.keys(DB);
@@ -760,7 +815,7 @@ function mountBuilder(root,init,opt){opt=opt||{};const st=Object.assign({table:'
     $('[data-n]',root).textContent=`${r.total} fila${r.total===1?'':'s'}${st.top&&r.total>st.top?` (se muestran ${st.top})`:''}`;
     $('[data-res]',root).innerHTML=htmlTable(r.cols,r.out.slice(0,50),T.types)}
   build();return {set(o){Object.assign(st,{cols:[],wcol:'',wval:'',group:'',ord:'',fn:'COUNT',top:10},o);build()}}}
-const b1=mountBuilder($('#bld1'),{table:'erp.facturas',cols:['factura_id','estado','importe'],wcol:'estado',wop:'=',wval:'Vencida',ord:'importe',dir:'DESC',top:5});
+mountMulti($('#bld1'));
 const b2=mountBuilder($('#bld2'),{table:'ats.candidaturas',group:'fase',fn:'COUNT',ord:'total',dir:'DESC',top:0},{group:true});
 const RC=[['Candidaturas por fase',{table:'ats.candidaturas',group:'fase',fn:'COUNT',ord:'total',dir:'DESC',top:0}],['Facturación por estado',{table:'erp.facturas',group:'estado',fn:'SUM',fcol:'importe',ord:'suma_importe',dir:'DESC',top:0}],['Importe medio por etapa',{table:'crm.oportunidades',group:'etapa',fn:'AVG',fcol:'importe',ord:'media_importe',dir:'DESC',top:0}],['Clientes por sector',{table:'crm.clientes',group:'sector',fn:'COUNT',ord:'total',dir:'DESC',top:0}]];
 RC.forEach(([n,o])=>{const b=document.createElement('button');b.className='btn ghost';b.textContent=n;b.onclick=()=>b2.set(o);$('#recipes').appendChild(b)});
