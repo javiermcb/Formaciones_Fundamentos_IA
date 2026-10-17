@@ -120,6 +120,7 @@ tr.hl2 td{background:var(--petrol-soft)}
 .figin.row{flex-direction:row;align-items:center}.figin.row>svg{flex:1 1 0;min-width:0}.figin.row>pre{flex:0 0 auto;max-width:42%}
 @media(max-width:820px){.figin.row{flex-direction:column;align-items:stretch}.figin.row>pre{max-width:100%}.figin.row>svg{flex:none;width:100%;height:auto}}
 .jdef p.eyebrow{font-size:.72rem}
+.jdef ul{margin:.3rem 0 0;padding-left:1.1rem;font-size:.95em;display:flex;flex-direction:column;gap:.15rem}
 .fichas{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:.4rem}
 .ficha{border:1px solid var(--line);border-radius:4px;padding:.35rem .45rem;font:400 .68rem var(--mono);background:var(--panel);opacity:.45;display:flex;justify-content:space-between;gap:.3rem;transition:opacity .2s}
 .ficha b{font-weight:500;color:var(--accent);visibility:hidden}
@@ -368,16 +369,17 @@ a{color:var(--petrol)}
 </div></section>
 
 <!-- 15 MODELO SEMANTICO -->
-<section class="slide" data-title="Modelo semántico"><div class="wrap">
-  <p class="eyebrow">Modelo semántico</p>
-  <h2>El modelo semántico explica los datos al informe</h2>
-  <div class="grid g3">
-    <div class="panel"><span class="tag pet">Tablas</span><p style="margin-top:.5rem">Qué tablas del Warehouse entran en el modelo.</p></div>
-    <div class="panel"><span class="tag pet">Relaciones</span><p style="margin-top:.5rem">Cómo se conectan: un cliente tiene muchas facturas.</p></div>
-    <div class="panel"><span class="tag pet">Medidas</span><p style="margin-top:.5rem">Cálculos con nombre, como «Facturación» o «Tasa de contratación».</p></div>
+<section class="slide full" data-title="Modelo semántico"><div class="wrap">
+  <div><p class="eyebrow">Modelo semántico</p><h2>El modelo semántico explica los datos al informe</h2></div>
+  <div class="journey">
+    <div class="stages" id="msList"></div>
+    <div class="jdetail">
+      <div class="jdef" id="msDef"></div>
+      <div class="jfig" id="msFig"></div>
+      <div class="jsim" id="msSim"></div>
+    </div>
   </div>
-  <p class="lead">El informe no vuelve a escribir SQL. Pregunta al modelo, y todos los informes que se apoyan en él dan la misma cifra.</p>
-  <p class="note">Si cada persona calcula «facturación» por su cuenta en su informe, habrá tantas cifras como informes.</p>
+  <p class="foot">Esquemas con tablas y cifras de ejemplo.</p>
 </div></section>
 
 <!-- 16 RELACIONES -->
@@ -408,13 +410,17 @@ a{color:var(--petrol)}
 </div></section>
 
 <!-- 18 MODOS -->
-<section class="slide" data-title="Modos de almacenamiento"><div class="wrap">
-  <p class="eyebrow">Modelo semántico</p>
-  <h2>¿Dónde están los datos cuando se abre el informe?</h2>
-  <div class="row"><button class="btn ghost on" data-m="imp">Import</button><button class="btn ghost" data-m="dq">DirectQuery</button><button class="btn ghost" data-m="dl">Direct Lake</button></div>
-  <div class="panel" id="modeBox" style="min-height:11rem"></div>
-  <p class="note pet">Cuál usa nuestro modelo: se comprueba en la demo.</p>
-  <p class="foot">Fuente: Microsoft Learn, «Direct Lake overview» y documentación de modos de almacenamiento de Power BI.</p>
+<section class="slide full" data-title="Modos de almacenamiento"><div class="wrap">
+  <div><p class="eyebrow">Modelo semántico</p><h2>¿Dónde están los datos cuando se abre el informe?</h2></div>
+  <div class="journey">
+    <div class="stages" id="mdList"></div>
+    <div class="jdetail">
+      <div class="jdef" id="mdDef"></div>
+      <div class="jfig" id="mdFig"></div>
+      <div class="jsim" id="mdSim"></div>
+    </div>
+  </div>
+  <p class="foot">Cuál usa nuestro modelo: se comprueba en la demo. Fuente: Microsoft Learn, «Direct Lake overview» y documentación de modos de almacenamiento de Power BI.</p>
 </div></section>
 
 <!-- 19 CREAR MODELO -->
@@ -656,6 +662,51 @@ function selStage(i){stCur=Math.max(0,Math.min(ST.length-1,i));flowBtns.forEach(
   $('#fabDef').innerHTML=`<h3>${x[0]}</h3><p>${x[2]}</p>`;$('#fabFig').innerHTML=svg(cur);$('#fabSim').innerHTML=`<span class="mono">Es como…</span><p>${x[3]}</p>`}
  vertKeys['Dónde encaja en Fabric']=d=>sel(cur+d);sel(1)})();
 
+/* ====== recorrido genérico: lista a la izquierda, detalle a la derecha ====== */
+function journey(o){let cur=o.start||0;const bs=[];
+ o.items.forEach((x,i)=>{const b=document.createElement('button');b.className='st2';b.innerHTML=`<span class="n">${i+1}</span><span><b>${x[0]}</b><small>${x[1]}</small></span>`;b.onclick=()=>{sel(i);toDetail()};$(o.list).appendChild(b);bs.push(b)});
+ function sel(i){cur=Math.max(0,Math.min(o.items.length-1,i));bs.forEach((b,k)=>b.classList.toggle('on',k===cur));const x=o.items[cur];
+  $(o.def).innerHTML=`<h3>${x[0]}</h3>${x[2]}`;$(o.fig).innerHTML=o.svg(cur);$(o.sim).innerHTML=`<span class="mono">Es como…</span><p>${x[3]}</p>`}
+ vertKeys[o.key]=d=>sel(cur+d);sel(cur)}
+const Rc=(c,x,y,w,h,rx)=>`<rect class="${c}" x="${x}" y="${y}" width="${w}" height="${h}" rx="${rx||4}"/>`;
+const Tx=(c,x,y,t,a)=>`<text class="${c}" x="${x}" y="${y}" text-anchor="${a||'middle'}">${t}</text>`;
+const SV=(label,inner,vb)=>`<svg viewBox="${vb||'0 0 400 240'}" preserveAspectRatio="xMidYMid meet" role="img" aria-label="${label}">${inner}</svg>`;
+
+/* ====== diapositiva 15: modelo semántico ====== */
+(function(){const cl=clientes.reduce((m,c)=>(m[c.cliente_id]=c,m),{});const tot=facturas.reduce((a,f)=>a+f.importe,0);
+ const sec={};SECT.forEach(x=>sec[x]=0);facturas.forEach(f=>sec[cl[f.cliente_id].sector]+=f.importe);const tt=fmt(tot)+' €';
+ const svg=k=>{
+  if(k===0){const names=['crm.clientes','erp.facturas','erp.lineas_factura','ats.candidaturas'],on=[1,1,0,0];
+   return SV('Se eligen tablas del Warehouse para el modelo',Tx('m',95,18,'Warehouse')+names.map((n,i)=>Rc(on[i]?'pet':'box',15,30+i*46,160,36)+Rc(on[i]?'acc':'box',24,41+i*46,14,14,2)+(on[i]?Tx('t',31,52+i*46,'✓'):'')+Tx('m',108,53+i*46,n)).join('')
+    +[0,1].map(i=>`<path class="ar" d="M178 ${48+i*46} C205 ${48+i*46} 205 100 228 100"/>`).join('')
+    +Rc('acc',230,30,155,170)+Tx('t',307,50,'Modelo semántico')+Rc('box',245,64,125,30,3)+Tx('m',307,83,'crm.clientes')+Rc('box',245,104,125,30,3)+Tx('m',307,123,'erp.facturas')+Tx('m',307,170,'solo entran las marcadas')+Tx('m',307,222,'tú eliges las tablas'))}
+  if(k===1)return SV('Relaciones entre tablas',Rc('box',15,25,110,60)+Tx('t',70,45,'dim_cliente')+Tx('m',70,62,'sector · región')+Rc('pet',145,100,110,60)+Tx('t',200,120,'fact_facturas')+Tx('m',200,137,'importe')+Rc('box',275,25,110,60)+Tx('t',330,45,'dim_fecha')+Tx('m',330,62,'mes · año')
+   +'<path class="ln" d="M70 85 V130 H145"/><path class="ln" d="M330 85 V130 H255"/>'+Tx('m',80,124,'1','start')+Tx('m',132,124,'*','end')+Tx('m',320,124,'1','end')+Tx('m',262,124,'*','start')
+   +Rc('acc',90,185,220,32,16)+Tx('t',200,206,'un cliente tiene muchas facturas'))
+  if(k===2){const rows=[['Todo',tt],...SECT.slice(0,2).map(x=>[x,fmt(sec[x])+' €'])];
+   return SV('Una medida se calcula con cada filtro',Rc('box',10,50,105,130)+Tx('t',62,70,'fact_facturas')+['factura_id','cliente_id','fecha'].map((c,i)=>Tx('m',62,92+i*16,c)).join('')+Rc('pet',20,142,85,22,3)+Tx('m',62,157,'importe')
+   +'<path class="ar" d="M118 153 H148"/>'+Rc('acc',150,95,115,80)+Tx('t',207,120,'Facturación')+Tx('m',207,140,'= SUM( importe )')+Tx('m',207,158,'una sola vez')
+   +'<path class="ar" d="M268 135 H290"/>'+Tx('m',340,48,'según el filtro')+rows.map((r,i)=>Rc(i?'box':'pet',290,58+i*50,100,42)+Tx('m',340,76+i*50,r[0])+Tx('t',340,93+i*50,r[1])).join(''))}
+  return SV('Tres informes con la misma cifra',Rc('acc',100,12,200,56)+Tx('t',200,34,'Modelo semántico')+Tx('m',200,52,'medida: Facturación')
+   +[0,1,2].map(i=>`<path class="ar" d="M${200+(i-1)*70} 68 L${70+i*130} 150"/>`).join('')
+   +['A','B','C'].map((x,i)=>Rc('box',20+i*130,150,100,66)+Tx('m',70+i*130,170,'Informe '+x)+Tx('t',70+i*130,198,tt)).join(''))};
+ journey({key:'Modelo semántico',list:'#msList',def:'#msDef',fig:'#msFig',sim:'#msSim',svg,items:[
+  ['Tablas','Qué entra en el modelo','<p>Primero se eligen las tablas del Warehouse que entran en el modelo. Solo esas estarán disponibles para los informes.</p>','Elegir los ingredientes de una receta: no entra todo lo que hay en la despensa, solo lo que hace falta.'],
+  ['Relaciones','Cómo se conectan','<p>Dicen cómo se conectan las tablas: un cliente tiene muchas facturas. Así, al filtrar por un cliente o un sector, el filtro llega a sus facturas.</p>','El árbol genealógico: indica quién está emparentado con quién, y por eso se puede preguntar por una familia entera.'],
+  ['Medidas','Cálculos con nombre','<p>Cálculos con nombre, como «Facturación» o «Tasa de contratación». Se definen una vez en el modelo y se recalculan con cada filtro del informe.</p>','La celda de total de una hoja de cálculo: una fórmula que se recalcula sola cuando cambias el filtro.'],
+  ['Una sola cifra','Para todos los informes','<p>El informe no vuelve a escribir SQL: pregunta al modelo. Todos los informes que se apoyan en él dan la misma cifra. Si cada persona calcula «facturación» por su cuenta, habrá tantas cifras como informes.</p>','Un único termómetro oficial para todo el edificio, en lugar de que cada despacho mida con el suyo.']]})})();
+
+/* ====== diapositiva 18: modos de almacenamiento ====== */
+(function(){const grid=(x,y,n,m,full)=>{let o='';for(let i=0;i<n;i++)for(let j=0;j<m;j++){const on=full||(i<2&&j<2||i===3&&j===1);o+=`<rect x="${x+j*14}" y="${y+i*14}" width="11" height="11" rx="2" style="fill:${on?'var(--petrol)':'var(--petrol-soft)'};stroke:var(--line)"/>`}return o};
+ const svg=k=>{const wh=Rc('box',10,80,90,70)+Tx('t',55,108,'Warehouse')+Tx('m',55,126,'tablas'),rp=Rc('box',320,95,70,40)+Tx('t',355,120,'Informe');
+  if(k===0)return SV('Import: copia de los datos dentro del modelo',wh+'<path class="ar" d="M102 115 H150"/>'+Tx('m',126,100,'copia')+Rc('acc',152,60,140,120)+Tx('t',222,80,'Modelo')+grid(180,92,5,6,true)+'<path class="ar" d="M294 115 H318"/>'+rp+Tx('m',222,205,'los datos viajan al actualizar'),'0 50 400 170')
+  if(k===1)return SV('DirectQuery: cada consulta va al origen',wh+'<path class="ar" d="M152 100 H102"/><path class="ar" d="M102 130 H152" style="stroke:var(--petrol)"/>'+Rc('acc',152,60,140,120)+Tx('t',222,80,'Modelo')+Tx('m',222,120,'sin datos')+Tx('m',222,138,'guardados')+'<path class="ar" d="M318 115 H294"/>'+rp+Tx('m',222,205,'cada gráfico: pregunta y respuesta'),'0 50 400 170')
+  return SV('Direct Lake: lee las tablas de OneLake directamente',Rc('box',10,60,100,110)+Tx('t',60,85,'OneLake')+Tx('m',60,103,'tablas Delta')+grid(24,115,3,5,true)+'<path class="ar" d="M112 115 H150"/>'+Rc('acc',152,60,140,120)+Tx('t',222,80,'Modelo')+grid(180,92,5,6,false)+'<path class="ar" d="M294 115 H318"/>'+rp+Tx('m',222,205,'solo lo necesario · actualizar = metadatos'),'0 50 400 170')};
+ journey({key:'Modos de almacenamiento',list:'#mdList',def:'#mdDef',fig:'#mdFig',sim:'#mdSim',svg,items:[
+  ['Import','Copia dentro del modelo','<p>Los datos se copian dentro del modelo.</p><ul class="clean"><li>Actualizar lleva tiempo y usa capacidad.</li><li>Los datos son los de la última actualización.</li><li>Sirve con cualquier licencia.</li></ul>','Fotocopiar el libro y llevarlo a la reunión: se consulta muy rápido, pero para tener lo último hay que volver a fotocopiar.'],
+  ['DirectQuery','Consulta al origen','<p>El modelo no guarda los datos: cada consulta del informe se envía al origen en ese momento.</p><ul class="clean"><li>Los datos son los actuales en el origen.</li><li>Cada gráfico lanza consultas al origen.</li><li>Sirve con cualquier licencia.</li></ul>','Llamar al archivo cada vez que te hacen una pregunta: la respuesta es actual, pero depende de cada llamada.'],
+  ['Direct Lake','Lee OneLake directamente','<p>El modelo lee las tablas Delta de OneLake y carga en memoria solo lo que la consulta necesita.</p><ul class="clean"><li>La «actualización» es sobre todo de metadatos: segundos. Requiere capacidad de Fabric.</li><li>Sobre el punto de conexión SQL puede volver a DirectQuery (por ejemplo, con una vista); sobre OneLake, no.</li></ul>','Ir a la estantería común y coger solo las páginas que necesitas, sin fotocopiar el libro entero.']]})})();
+
 /* ====== fuentes ====== */
 (function(){const box=$('#srcCards');Object.entries(SRC).forEach(([n,s])=>{const d=document.createElement('button');d.className='panel';d.style.cssText='text-align:left;cursor:pointer';
   d.innerHTML=`<span class="tag acc">${n}</span><h3 style="margin-top:.5rem">${s.d}</h3><p class="mono small mut" data-t></p>`;
@@ -785,13 +836,6 @@ RC.forEach(([n,o])=>{const b=document.createElement('button');b.className='btn g
   $('#mDax').innerHTML=ok?`<span class="c">-- Medida en el modelo (ejemplo)</span>\nTasa contratación =\n  DIVIDE(\n    CALCULATE( COUNTROWS( candidaturas ), candidaturas[resultado] = "Contratado" ),\n    COUNTROWS( candidaturas )\n  )`:`<span class="c">-- Promedio de las tasas de cada fila: cada canal pesa igual, tenga 3 o 30 candidaturas</span>`;
   $('#mNote').className='note '+(ok?'pet':'');$('#mNote').textContent=ok?`El total sale de ${H} ÷ ${N}. Cambia el área: la medida se recalcula sola.`:'El total engaña: un canal con pocas candidaturas pesa igual que uno con muchas.'}
  sel.onchange=draw;$('#mBad').onclick=()=>{ok=false;$('#mBad').classList.add('on');$('#mOk').classList.remove('on');draw()};$('#mOk').onclick=()=>{ok=true;$('#mOk').classList.add('on');$('#mBad').classList.remove('on');draw()};draw()})();
-
-/* ====== modos ====== */
-(function(){const M={imp:['Import','Los datos se copian dentro del modelo.',['La actualización lleva tiempo y usa recursos de capacidad.','Funciona con cualquier licencia de Fabric o Power BI.','Los datos del informe son los de la última actualización.']],
- dq:['DirectQuery','El modelo no guarda los datos: cada consulta del informe se envía al origen en ese momento.',['Los datos son los actuales en el origen.','Cada gráfico lanza consultas al origen.','Funciona con cualquier licencia de Fabric o Power BI.']],
- dl:['Direct Lake','El modelo lee las tablas Delta de OneLake directamente y carga en memoria solo lo que la consulta necesita.',['La «actualización» consiste sobre todo en metadatos y tarda segundos.','Requiere una capacidad de Fabric.','En la variante sobre el punto de conexión SQL, puede volver a DirectQuery en algunos casos, por ejemplo al usar una vista. La variante sobre OneLake no hace esa vuelta atrás.']]};
- const set=k=>{$$('[data-m]').forEach(b=>b.classList.toggle('on',b.dataset.m===k));const m=M[k];$('#modeBox').innerHTML=`<h3>${m[0]}</h3><p style="margin:.4rem 0 .6rem">${m[1]}</p><ul class="clean">${m[2].map(x=>`<li>${x}</li>`).join('')}</ul>`};
- $$('[data-m]').forEach(b=>b.onclick=()=>set(b.dataset.m));set('imp')})();
 
 /* ====== informe ====== */
 (function(){const cl=clientes.reduce((m,c)=>(m[c.cliente_id]=c,m),{});

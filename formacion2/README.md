@@ -15,7 +15,7 @@ Audiencia: equipo de Innovation & Analytics, sin nivel de SQL. Duración: 1 hora
 | Nuestras tablas | 7 CRM/ERP/ATS · 8 Explorador |
 | Consultas | 9 Anatomía · 10 Filtrar y ordenar · 11 Agrupar · 12 JOIN · 13 JOIN que duplica |
 | Vistas | 14 Crear una vista |
-| Modelo semántico | 15 Qué es · 16 Relaciones · 17 Medidas · 18 Modos de almacenamiento · 19 Crear el modelo |
+| Modelo semántico | 15 Qué es (4 conceptos interactivos) · 16 Relaciones · 17 Medidas · 18 Modos de almacenamiento (interactivo) · 19 Crear el modelo |
 | Power BI | 20 Informe simulado · 21 Guion de la demo |
 | Cierre | 22 Test · 23 Reglas · 24 Palabras después · 25 Tres ideas · 26 Encargo · 27 Fuentes · 28 Propiedad |
 
