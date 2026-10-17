@@ -117,6 +117,9 @@ tr.hl2 td{background:var(--petrol-soft)}
 .concept.on{border-color:var(--accent);background:var(--accent-soft)}
 .concept ul{font-size:1.02em}
 .figin{width:100%;display:flex;flex-direction:column;gap:.8rem;align-items:stretch}
+.figin.row{flex-direction:row;align-items:center}.figin.row>svg{flex:1 1 0;min-width:0}.figin.row>pre{flex:0 0 auto;max-width:42%}
+@media(max-width:820px){.figin.row{flex-direction:column}.figin.row>pre{max-width:100%}}
+.jdef p.eyebrow{font-size:.72rem}
 .fichas{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:.4rem}
 .ficha{border:1px solid var(--line);border-radius:4px;padding:.35rem .45rem;font:400 .68rem var(--mono);background:var(--panel);opacity:.45;display:flex;justify-content:space-between;gap:.3rem;transition:opacity .2s}
 .ficha b{font-weight:500;color:var(--accent);visibility:hidden}
@@ -605,8 +608,10 @@ function selStage(i){stCur=Math.max(0,Math.min(ST.length-1,i));flowBtns.forEach(
  const tot=venc.reduce((a,x)=>a+x.n,0);let timer=null;
  const out=(h)=>{$('#qOut').innerHTML='<span class="mono">Respuesta</span>'+h};
  function pick(k){clearInterval(timer);$$('.concept').forEach(b=>b.classList.toggle('on',b.dataset.k===k));const fig=$('#qFig');
-  if(k==='dw'){fig.innerHTML=`<div class="figin"><pre class="sql">${hl("SELECT COUNT(*)\nFROM erp.facturas\nWHERE estado = 'Vencida';")}</pre><div class="count"><span>Consultas<b>1</b></span><span>Facturas vencidas<b>${tot}</b></span></div></div>`;
-   out(`<p>Una consulta sobre la tabla de facturas devuelve <b>${tot}</b> al instante, sin abrir nada ficha por ficha.</p>`);return}
+  if(k==='dw'){const sq=facturas.map((f,i)=>{const v=f.estado==='Vencida';return `<rect x="${14+(i%9)*18}" y="${34+Math.floor(i/9)*18}" width="14" height="14" rx="2" style="fill:${v?'var(--accent)':'var(--petrol-soft)'};stroke:${v?'var(--accent)':'var(--line)'}"/>`}).join('');
+   const svg=`<svg viewBox="0 0 400 130" role="img" aria-label="De ${facturas.length} facturas, la consulta cuenta las ${tot} vencidas" style="width:100%;height:auto;max-height:100%"><text class="m" x="14" y="24" style="font-size:10px">erp.facturas · ${facturas.length} filas</text>${sq}<path class="ar" d="M184 70 H236"/><text class="m" x="210" y="62" text-anchor="middle">WHERE</text><text class="m" x="210" y="92" text-anchor="middle">COUNT(*)</text><rect class="acc" x="250" y="30" width="136" height="80" rx="6"/><text class="m" x="318" y="50" text-anchor="middle">facturas vencidas</text><text x="318" y="92" text-anchor="middle" style="font:400 38px 'Newsreader',Georgia,serif;fill:var(--fg)">${tot}</text></svg>`;
+   fig.innerHTML=`<div class="figin row"><pre class="sql">${hl("SELECT COUNT(*)\nFROM erp.facturas\nWHERE estado = 'Vencida';")}</pre>${svg}</div>`;
+   out(`<p>Una consulta sobre la tabla de facturas devuelve <b>${tot}</b> al instante: filtra las vencidas y las cuenta, sin abrir nada ficha por ficha.</p>`);return}
   fig.innerHTML=`<div class="figin"><div class="count"><span>Fichas abiertas<b id="cA">0</b> / ${venc.length}</span><span>Vencidas contadas<b id="cV">0</b></span></div><div class="fichas">${venc.map((x,i)=>`<div class="ficha" id="fi${i}"><span>${x.e.replace('Cliente ','C')}</span><b>${x.n}</b></div>`).join('')}</div></div>`;
   out('<p>En general: abrir la ficha de cada cliente y sumar a mano, o buscar un informe ya preparado. Va contando…</p>');
   const reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches;let i=0,acc=0;
