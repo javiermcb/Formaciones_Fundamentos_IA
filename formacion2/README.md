@@ -7,21 +7,23 @@ Audiencia: equipo de Innovation & Analytics, sin nivel de SQL. Duración: 1 hora
 - No se inventa: los datos de Fabric llevan fuente (Microsoft Learn); lo que no se pudo contrastar no se incluye.
 - Las tablas, columnas y cifras de las simulaciones son **de ejemplo** (CRM, ERP, ATS). Se sustituyen en el bloque `DATOS DE EJEMPLO` del script.
 
-## V1 (28 diapositivas, un solo HTML)
+## V1 (27 diapositivas, un solo HTML)
 | Bloque | Diapositivas |
 |---|---|
 | Gancho | 1 Portada · 2 Palabras antes |
 | Qué es | 3 Ruta · 4 Viaje del dato · 5 Aplicación vs Warehouse · 6 Dónde encaja en Fabric |
-| Nuestras tablas | 7 CRM/ERP/ATS · 8 Explorador |
-| Consultas | 9 Anatomía · 10 Filtrar y ordenar · 11 Agrupar · 12 JOIN · 13 JOIN que duplica |
-| Vistas | 14 Crear una vista |
-| Modelo semántico | 15 Qué es (4 conceptos interactivos) · 16 Relaciones · 17 Medidas · 18 Modos de almacenamiento (interactivo) · 19 Crear el modelo |
-| Power BI | 20 Informe simulado · 21 Guion de la demo |
-| Cierre | 22 Test · 23 Reglas · 24 Palabras después · 25 Tres ideas · 26 Encargo · 27 Fuentes · 28 Propiedad |
+| Nuestras tablas | 7 Explorador (tres aplicaciones, un Warehouse) |
+| Consultas | 8 SQL, el lenguaje del Warehouse · 9 Filtrar y ordenar · 10 Agrupar · 11 JOIN · 12 JOIN que duplica |
+| Vistas | 13 Crear una vista |
+| Modelo semántico | 14 Qué es (4 conceptos) · 15 Relaciones · 16 Medidas · 17 Modos de almacenamiento · 18 Crear el modelo |
+| Power BI | 19 Informe simulado · 20 Guion de la demo |
+| Cierre | 21 Test · 22 Reglas · 23 Palabras después · 24 Tres ideas · 25 Encargo · 26 Fuentes · 27 Propiedad |
+
+Cambios de diseño: las diapositivas 4, 5, 6, 14 y 17 usan lista a la izquierda y definición, esquema y símil a la derecha. Se quitó la antigua diapositiva 7 (tarjetas CRM/ERP/ATS) porque el explorador ya muestra las tablas por aplicación.
 
 ## Pendiente de decisión del autor
-- Diapositiva 23: reglas de acceso reales del equipo (está marcada «por completar»).
-- Diapositivas 18 y 21: indicar qué modo de almacenamiento usa el modelo real.
+- Diapositiva 22: reglas de acceso reales del equipo (está marcada «por completar»).
+- Diapositivas 17 y 20: indicar qué modo de almacenamiento usa el modelo real.
 - Revisar los nombres de menú de Fabric antes de la sesión (cambian con frecuencia).
 - Tiempos orientativos y guion del profesor: no hechos todavía.
 
