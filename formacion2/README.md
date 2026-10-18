@@ -29,3 +29,23 @@ Cambios de diseño: las diapositivas 4, 5, 6, 14 y 17 usan lista a la izquierda 
 
 ## Límites de la verificación
 Búsqueda del 14/10/2026. Microsoft Learn no se pudo abrir directamente desde el entorno; los datos se contrastaron con los extractos del buscador.
+
+## V2 (27 diapositivas: 22 principales + 5 de anexo técnico)
+Se conserva la V1 sin cambios en `v1/`. La V2 reorienta la segunda mitad hacia una visión general (a petición del autor: «a partir de la 11 se va a un lado más técnico»).
+
+| Bloque | Diapositivas |
+|---|---|
+| Gancho y qué es | 1 Portada · 2 Palabras antes · 3 Ruta · 4 Viaje del dato · 5 Aplicación vs Warehouse · 6 Dónde encaja en Fabric |
+| Tablas y SQL | 7 Explorador · 8 SQL · 9 Elegir tablas y campos · 10 Agrupar · 11 Vistas |
+| Conectar con Power BI | 12 Modelo semántico · 13 Del Warehouse a Power BI (crear modelo, modos, informes, apps, confianza) · 14 Informe simulado |
+| Contar y hacerlo bien | 15 Una historia con los datos · 16 Quién trabaja con Fabric y Power BI (perfiles y habilidades) · 17 Buenas prácticas |
+| Cierre | 18 Demo en vivo · 19 Palabras después · 20 Tres ideas · 21 Fuentes · 22 Propiedad |
+| Anexo técnico | 23 Tipos de JOIN · 24 JOIN que duplica · 25 Relaciones · 26 Medidas · 27 Modos de almacenamiento |
+
+Quitadas de la secuencia principal: «Crear el modelo» (ahora dentro de la 13) y «Reglas» (ahora dentro de la 17). El anexo conserva las diapositivas técnicas de la V1 para preguntas o para la formación 3.
+
+### De dónde salen los datos nuevos (consultados el 18/10/2026, vía buscador)
+- Perfiles y habilidades: certificaciones Fabric Data Engineer (DP-700), Fabric Analytics Engineer (DP-600) y Power BI Data Analyst (PL-300), y guías de uso de Power BI de Microsoft Learn. Son perfiles de Microsoft, no un estudio del mercado laboral.
+- Buenas prácticas: guías de rendimiento y seguridad del Warehouse, esquema en estrella, diseño de informes, accesibilidad, apps, endorsement y RLS.
+- Storytelling: consejos de diseño de Microsoft Learn y K. Nussbaumer Knaflic, *Storytelling with Data* (2015; resumen contrastado solo con fuentes secundarias).
+- No se encontró en Microsoft Learn una guía de convenciones de nombres para el Warehouse, así que no se incluye.
