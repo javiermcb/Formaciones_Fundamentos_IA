@@ -471,14 +471,6 @@ a{color:var(--petrol)}
   <div class="grid" id="demo"></div>
 </div></section>
 
-<!-- 22 QUIZ -->
-<section class="slide" data-title="Test"><div class="wrap">
-  <p class="eyebrow">Comprobamos</p>
-  <h2>¿Tabla, consulta, vista o medida?</h2>
-  <div class="grid g2" id="quiz"></div>
-  <p class="msg" id="quizScore"></p>
-</div></section>
-
 <!-- 23 REGLAS -->
 <section class="slide" data-title="Reglas"><div class="wrap">
   <p class="eyebrow">Reglas de uso</p>
@@ -510,14 +502,6 @@ a{color:var(--petrol)}
   </div>
 </div></section>
 
-<!-- 26 ENCARGO -->
-<section class="slide" data-title="Encargo"><div class="wrap">
-  <p class="eyebrow">Para esta semana</p>
-  <h2>Un encargo pequeño</h2>
-  <p class="lead">Elige una pregunta de tu área que hoy respondas a mano. Escríbela como frase, localiza las tablas que haría falta mirar y anota qué columna las une.</p>
-  <p class="note pet">Para la formación 3 traeremos esas preguntas.</p>
-</div></section>
-
 <!-- 27 FUENTES -->
 <section class="slide" data-title="Fuentes"><div class="wrap">
   <p class="eyebrow">Fuentes y límites</p>
@@ -544,7 +528,7 @@ a{color:var(--petrol)}
 
 <div id="nav"><div id="bar"></div>
   <span class="own">Formación interna · Del dato al informe · Material propiedad de Javier Martín-Consuegra</span>
-  <span id="cnt">1 / 27</span><button id="prev" aria-label="Anterior">←</button><button id="next" aria-label="Siguiente">→</button>
+  <span id="cnt">1 / 25</span><button id="prev" aria-label="Anterior">←</button><button id="next" aria-label="Siguiente">→</button>
 </div>
 
 <script>
@@ -950,13 +934,6 @@ RC.forEach(([n,o])=>{const b=document.createElement('button');b.className='btn g
 /* ====== demo ====== */
 (function(){const S=[['Abrir el espacio de trabajo y el Warehouse','Ver el nombre del Warehouse y sus esquemas.'],['Recorrer las tablas','Una tabla de cada aplicación: columnas y claves.'],['Nueva consulta SQL','Un SELECT TOP 100 y un filtro con WHERE.'],['Agrupar y unir','Un GROUP BY y un JOIN con la clave.'],['Crear una vista','CREATE VIEW con un nombre claro.'],['Nuevo modelo semántico','Elegir tablas, ver relaciones y crear una medida.'],['Comprobar el modo de almacenamiento','Dónde se ve y qué significa para nosotros.'],['Crear un informe','Un gráfico y un filtro apoyados en el modelo.']];
  const box=$('#demo');S.forEach(([a,b])=>{const d=document.createElement('button');d.className='check';d.innerHTML=`<span class="bx"></span><span><b>${a}</b><br><span class="mut small">${b}</span></span>`;d.onclick=()=>d.classList.toggle('done');box.appendChild(d)})})();
-
-/* ====== quiz ====== */
-(function(){const Q=[['Las candidaturas tal como las guarda el ATS','Tabla'],['Una consulta que lanzo yo una vez para comprobar una cifra','Consulta'],['Candidaturas por fase, con nombre, para que la use cualquier informe','Vista'],['Facturación total que cambia con los filtros del informe','Medida'],['Las facturas del ERP tal como llegan al Warehouse','Tabla'],['Tasa de contratación que se recalcula al elegir un área','Medida']];
- const box=$('#quiz');let done=0,good=0;
- Q.forEach(([t,a])=>{const d=document.createElement('div');d.className='panel q';d.innerHTML=`<p>${t}</p><div class="opts">${['Tabla','Consulta','Vista','Medida'].map(o=>`<button class="btn ghost">${o}</button>`).join('')}</div>`;
-  $$('button',d).forEach(b=>b.onclick=()=>{if(d.dataset.d)return;d.dataset.d=1;done++;b.textContent===a?(good++,b.classList.add('right')):(b.classList.add('wrong'),$$('button',d).find(x=>x.textContent===a).classList.add('right'));
-   if(done===Q.length)$('#quizScore').textContent=`${good} de ${Q.length}.`});box.appendChild(d)})})();
 
 /* init */
 const h=parseInt((location.hash||'').slice(1),10);show(h>=1&&h<=slides.length?h-1:0);
